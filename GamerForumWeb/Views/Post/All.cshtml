@@ -1,0 +1,57 @@
+﻿@model IEnumerable<PostModel>
+
+@{
+    ViewBag.Title = "All Posts";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="text-center row">
+    @foreach (var post in Model)
+    {
+        
+
+        <div class="container-fluid mt-100">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <div class="media flex-wrap w-100 align-items-center">
+                                    <img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1574583246/AAA/2.jpg" class="d-block ui-w-40 rounded-circle" alt="">
+                                    <div class="media-body ml-3">
+                                        @post.Title
+                                        <div class="text-muted small">
+                                            <time datetime="@post.CreatedOn.ToString("O")"></time>
+                                        </div>
+                                    </div>
+                                    <div class="text-muted small ml-3">
+                                        @if (this.User.Identity.IsAuthenticated)
+                                        {
+                                            <div class="px-4 pt-3"> <button type="button" class="btn btn-secondary" onclick="showAddCommentForm(@post.PostId)"><i class="fa fa-plus"></i>&nbsp; Answer</button> </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                @*<article>
+                                    @Html.Raw(post.SanitizedContent)
+                                </article>*@
+                                @*@{ DisplayComments(post.Id); }*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           @* <h5 class="card-title mt-1">@post.Title</h5>
+            <p class="mb-0">Content: @post.Content</p>*@
+
+            @*<form class="input-group-sm" asp-controller="Games" asp-action="Posts" asp-route-bookId="@game.Id">
+                <input type="submit" value="Posts" class="fs-6 btn btn-success mb-3 p-2" />
+            </form>
+            <form class="input-group-sm" asp-controller="Games" asp-action="AddToFavorite" asp-route-bookId="@game.Id">
+                <input type="submit" value="Add to favorite" class="fs-6 btn btn-success mb-3 p-2" />
+            </form>*@
+        
+    }
+</div>

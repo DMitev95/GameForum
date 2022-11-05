@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace GamerForumWeb.Core.Repository
+namespace GamerForumWeb.Db.Repository
 {
     /// <summary>
     /// Abstraction of repository access methods

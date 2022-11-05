@@ -40,7 +40,7 @@ namespace GamerForumWeb.Db.Data.Entities
 
         [Required]
         [ForeignKey(nameof(CategoryId))]
-        public virtual Category ForumCategory { get; set; }
+        public virtual Category Category { get; set; }
         public List<Post> Posts { get; set; } = new List<Post>();
         public List<UserGames> Users { get; set; } = new List<UserGames>();        
     }

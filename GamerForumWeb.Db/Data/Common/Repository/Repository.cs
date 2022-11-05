@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Linq.Expressions;
 
 
-namespace GamerForumWeb.Core.Repository
+namespace GamerForumWeb.Db.Repository
 {
     /// <summary>
     /// Implementation of repository access methods

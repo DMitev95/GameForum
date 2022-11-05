@@ -1,4 +1,5 @@
-﻿using GamerForumWeb.Models;
+﻿using GamerForumWeb.Core.Contracts;
+using GamerForumWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -6,16 +7,18 @@ namespace GamerForumWeb.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IGameService gameService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IGameService _gameService)
         {
-            _logger = logger;
+            gameService = _gameService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var model = await gameService.GetTopGames();
+
+            return View(model);
         }
 
         public IActionResult Privacy()
