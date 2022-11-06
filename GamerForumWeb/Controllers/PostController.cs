@@ -37,10 +37,7 @@ namespace GamerForumWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(PostModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
+            
             var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
             await postService.AddPost(model, userId);
 

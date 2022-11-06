@@ -29,10 +29,7 @@ namespace GamerForumWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(CommentModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
+            
             var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
             await commentService.AddComment(model, userId);
 
