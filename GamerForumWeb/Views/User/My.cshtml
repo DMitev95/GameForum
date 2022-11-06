@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<GamesQueryModel>
 
 @{
-    ViewBag.Title = "All Games";
+    ViewBag.Title = "My Games";
 }
 
 <h2 class="text-center">@ViewBag.Title</h2>
@@ -22,11 +22,7 @@
                 <p>Category: @game.Category</p>
             </div>
           
-            <a asp-controller="User" asp-action="AddToCollection" asp-route-gameId="@game.Id" class="btn btn-outline-success">Add as Favorite</a>
-            <a asp-controller="Post" asp-action="Add" asp-route-gameId="@game.Id" class="btn btn-outline-success">Add Post</a>
-            <a asp-controller="Post" asp-action="All" asp-route-gameId="@game.Id" class="btn btn-outline-info">All Post</a>
-            <a asp-controller="Game" asp-action="Edit" asp-route-gameId="@game.Id" class="btn btn-outline-warning">Edit Game</a>
-            <a asp-controller="Game" asp-action="Delete" asp-route-gameId="@game.Id" class="btn btn-outline-danger">Delete</a>
+            <a asp-controller="User" asp-action="RemoveFromCollection" asp-route-gameId="@game.Id" class="btn btn-outline-danger">Remove from favorite!</a>
         </div>
     }
-</div>
+</div

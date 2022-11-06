@@ -25,12 +25,11 @@ namespace GamerForumWeb.Db.Data.Entities
 
         public DateTime? DeletedOn { get; set; }
 
+        public List<Post> Posts { get; set; } = new List<Post>();
 
-        public List<Post> Posts = new List<Post>();
+        public List<PostComment> Comments { get; set; } = new List<PostComment>();
 
-        public List<PostComment> Comments = new List<PostComment>();
-
-        public List<UserGames> Games = new List<UserGames>();
+        public List<UserGames> Games { get; set; } = new List<UserGames>();
 
     }
 }

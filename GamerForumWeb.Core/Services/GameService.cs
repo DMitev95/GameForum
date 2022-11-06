@@ -93,7 +93,7 @@ namespace GamerForumWeb.Core.Services
                 })
                 .Take(3)
                 .ToListAsync();
-        }
+        }      
 
         public async Task UpdateGame(int gameId, GameModel model)
         {
