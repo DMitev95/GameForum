@@ -8,6 +8,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Categories\**" />
+    <Content Remove="Views\Categories\**" />
+    <EmbeddedResource Remove="Views\Categories\**" />
+    <None Remove="Views\Categories\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Comment\Add.cshtml" />
+    <None Include="Views\Comment\All.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.10" />

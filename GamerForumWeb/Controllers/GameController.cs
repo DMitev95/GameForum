@@ -21,7 +21,12 @@ namespace GamerForumWeb.Controllers
 
             return View(model);
         }
-        
+
+        public async Task<IActionResult> GetByCategory(int categoryId)
+        {
+            var model = await gameService.GetGamesByCategory(categoryId);
+            return View(model);
+        }
 
         public async Task<IActionResult> Mine()
         {

@@ -1,0 +1,21 @@
+﻿@model IEnumerable<CategoryQueryModel>
+
+@{
+    ViewBag.Title = "All Category";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="text-center row">
+    @foreach (var category in Model)
+    {
+        <div class="card col-4" style="width: 20rem; ">
+            <div class="card-body">
+                <h5 class="card-title mt-1">@category.Name</h5>
+            </div>
+          
+            <a asp-controller="Game" asp-action="GetByCategory" asp-route-categoryId="@category.Id" class="btn btn-outline-success">Games in category</a>
+        </div>
+    }
+</div>

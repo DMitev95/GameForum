@@ -1,12 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using GamerForumWeb.Core.Contracts;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GamerForumWeb.Controllers
 {
     public class CategoryController : Controller
     {
-        public IActionResult Index()
+        private readonly ICategoryService categoryService;
+
+        public CategoryController(ICategoryService _categoryService)
         {
-            return View();
+            categoryService = _categoryService;
+        }
+
+        public async Task<IActionResult> AllCategories()
+        {
+            var model = await categoryService.GetAllCategory();
+
+            return View(model);
         }
     }
 }

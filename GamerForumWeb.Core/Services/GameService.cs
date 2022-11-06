@@ -63,7 +63,6 @@ namespace GamerForumWeb.Core.Services
         public async Task<GameModel> GetGameModelById(int gameId)
         {
             var game =  await repo.GetByIdAsync<Game>(gameId);
-            //var categorie = await repo.All<Category>();
 
             return new GameModel()
             {
@@ -75,6 +74,20 @@ namespace GamerForumWeb.Core.Services
                 ImageUrl = game.ImageUrl,
                 Categories = context.Categories.ToList(),
             };
+        }
+
+        public async Task<IEnumerable<GamesQueryModel>> GetGamesByCategory(int categoryId)
+        {
+            return await context.Games.Where(g => g.CategoryId == categoryId).Select(g => new GamesQueryModel()
+            {
+                Id = g.Id,
+                Title = g.Title,
+                Studio = g.Studio,
+                Description = g.Description,
+                Rating = g.Rating,
+                ImageUrl = g.ImageUrl,
+                Category = g.Category.Name
+            }).ToListAsync();
         }
 
         public async Task<IEnumerable<GamesQueryModel>> GetTopGames()
