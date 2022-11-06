@@ -46,6 +46,10 @@ namespace GamerForumWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(GameModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
             await gameService.AddNewGame(model);
 
             return RedirectToAction(nameof(All));
@@ -70,7 +74,12 @@ namespace GamerForumWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(int gameId, GameModel model)
         {
-           await gameService.UpdateGame(gameId, model);
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            await gameService.UpdateGame(gameId, model);
 
             return RedirectToAction(nameof(All));
         }

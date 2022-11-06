@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using static GamerForumWeb.Db.Data.Common.DataValidationConstants.Post;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GamerForumWeb.Core.Models.Post
 {
@@ -13,11 +8,11 @@ namespace GamerForumWeb.Core.Models.Post
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(MaxTitleLenght)]
+        [StringLength(MaxTitleLenght, MinimumLength = MinTitleLenght, ErrorMessage = "{0} lenght must be between {2} and {1} characters long!")]
         public string Title { get; set; }
 
         [Required]
-        [MaxLength(MaxContentLenght)]
+        [StringLength(MaxContentLenght, MinimumLength = MinContentLenght, ErrorMessage = "{0} lenght must be between {2} and {1} characters long!")]
         public string Content { get; set; }
 
         public DateTime CreatedDate { get; set; } = DateTime.Now;

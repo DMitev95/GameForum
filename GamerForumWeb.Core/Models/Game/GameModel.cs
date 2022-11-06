@@ -7,15 +7,15 @@ namespace GamerForumWeb.Core.Models.Game
     public class GameModel
     {
         [Required]
-        [StringLength(MaxTitleLenght)]
+        [StringLength(MaxTitleLenght, MinimumLength = MinTitleLenght, ErrorMessage = "{0} lenght must be between {2} and {1} characters long!")]
         public string Title { get; set; }
 
         [Required]
-        [StringLength(MaxStudioLenght)]
+        [StringLength(MaxStudioLenght, MinimumLength = MinStudioLenght, ErrorMessage = "{0} lenght must be between {2} and {1} characters long!")]
         public string Studio { get; set; }
 
         [Required]
-        [MaxLength(MaxDescriptionLenght)]
+        [StringLength(MaxDescriptionLenght, MinimumLength = MinDescriptionLenght, ErrorMessage = "{0} lenght must be between {2} and {1} characters long!")]
         public string Description { get; set; }
 
         [Required]

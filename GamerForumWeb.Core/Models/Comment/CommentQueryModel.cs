@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GamerForumWeb.Core.Models.Comment
+﻿namespace GamerForumWeb.Core.Models.Comment
 {
     public class CommentQueryModel
     {
