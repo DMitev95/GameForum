@@ -106,10 +106,10 @@ namespace GamerForumWeb.Areas.Identity.Pages.Account
             public string Username { get; set; }
 
             [Display(Name = "PhoneNumber")]
-            public string? PhoneNumber { get; set; }
+            public string PhoneNumber { get; set; }
 
             [Display(Name = "Country")]
-            public string? Country { get; set; }
+            public string Country { get; set; }
         }
 
 

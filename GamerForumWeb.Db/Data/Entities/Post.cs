@@ -11,12 +11,12 @@ namespace GamerForumWeb.Db.Data.Entities
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(MaxTitleLenght)]
-        public string Title { get; set; }
+        [StringLength(MaxTitleLenght)]
+        public string Title { get; set; } = null!;
 
         [Required]
-        [MaxLength(MaxContentLenght)]
-        public string Content { get; set; }
+        [StringLength(MaxContentLenght)]
+        public string Content { get; set; } = null!;
 
         public DateTime CreatedDate { get; set; } = DateTime.Now;
 

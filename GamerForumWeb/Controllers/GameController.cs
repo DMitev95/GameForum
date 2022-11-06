@@ -9,22 +9,18 @@ namespace GamerForumWeb.Controllers
     public class GameController : Controller
     {
         private readonly IGameService gameService;
-        private readonly IPostService postService;
 
-        public GameController(IGameService _gameService, IPostService postService)
+        public GameController(IGameService _gameService)
         {
             gameService = _gameService;
-            this.postService = postService;
         }
 
-        [AllowAnonymous]
         public async Task<IActionResult> All()
         {
             var model = await gameService.AllGames();
 
             return View(model);
         }
-
         
 
         public async Task<IActionResult> Mine()
@@ -56,9 +52,25 @@ namespace GamerForumWeb.Controllers
         }
 
 
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int gameId)
         {
-           await gameService.DeleteGame(id);
+           await gameService.DeleteGame(gameId);
+
+            return RedirectToAction(nameof(All));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int gameId)
+        {
+            var game = await gameService.GetGameModelById(gameId);
+
+            return View(game);            
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int gameId, GameModel model)
+        {
+           await gameService.UpdateGame(gameId, model);
 
             return RedirectToAction(nameof(All));
         }

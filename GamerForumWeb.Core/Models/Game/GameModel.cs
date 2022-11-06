@@ -7,13 +7,14 @@ namespace GamerForumWeb.Core.Models.Game
     public class GameModel
     {
         [Required]
-        [MaxLength(MaxTitleLenght)]
+        [StringLength(MaxTitleLenght)]
         public string Title { get; set; }
 
         [Required]
-        [MaxLength(MaxStudioLenght)]
+        [StringLength(MaxStudioLenght)]
         public string Studio { get; set; }
 
+        [Required]
         [MaxLength(MaxDescriptionLenght)]
         public string Description { get; set; }
 

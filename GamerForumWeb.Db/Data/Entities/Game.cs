@@ -12,21 +12,22 @@ namespace GamerForumWeb.Db.Data.Entities
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(MaxTitleLenght)]
-        public string Title { get; set; }
+        [StringLength(MaxTitleLenght)]
+        public string Title { get; set; } = null!;
 
         [Required]
-        [MaxLength(MaxStudioLenght)]
-        public string Studio { get; set; }
+        [StringLength(MaxStudioLenght)]
+        public string Studio { get; set; } = null!;
 
-        [MaxLength(MaxDescriptionLenght)]
-        public string Description { get; set; }
+        [Required]
+        [StringLength(MaxDescriptionLenght)]
+        public string Description { get; set; } = null!;
 
         [Required]
         public double Rating { get; set; }
 
         [Required]
-        public string ImageUrl { get; set; }
+        public string ImageUrl { get; set; } = null!;
 
         public DateTime CreatedDate { get; set; } = DateTime.Now;
 
@@ -40,7 +41,7 @@ namespace GamerForumWeb.Db.Data.Entities
 
         [Required]
         [ForeignKey(nameof(CategoryId))]
-        public virtual Category Category { get; set; }
+        public virtual Category Category { get; set; } = null!;
         public List<Post> Posts { get; set; } = new List<Post>();
         public List<UserGames> Users { get; set; } = new List<UserGames>();        
     }

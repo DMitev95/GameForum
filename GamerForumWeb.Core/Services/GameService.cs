@@ -4,11 +4,6 @@ using GamerForumWeb.Db.Data;
 using GamerForumWeb.Db.Data.Entities;
 using GamerForumWeb.Db.Repository;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GamerForumWeb.Core.Services
 {
@@ -65,9 +60,21 @@ namespace GamerForumWeb.Core.Services
             return await context.Categories.ToListAsync();
         }
 
-        public async Task<IEnumerable<GamesQueryModel>> GetGameById(int gameId)
+        public async Task<GameModel> GetGameModelById(int gameId)
         {
-            return (IEnumerable<GamesQueryModel>)await repo.GetByIdAsync<Game>(gameId);
+            var game =  await repo.GetByIdAsync<Game>(gameId);
+            //var categorie = await repo.All<Category>();
+
+            return new GameModel()
+            {
+                Title = game.Title,
+                Description = game.Description,
+                Studio = game.Studio,
+                Rating = game.Rating,
+                CategoryId = game.CategoryId,
+                ImageUrl = game.ImageUrl,
+                Categories = context.Categories.ToList(),
+            };
         }
 
         public async Task<IEnumerable<GamesQueryModel>> GetTopGames()
@@ -86,6 +93,21 @@ namespace GamerForumWeb.Core.Services
                 })
                 .Take(3)
                 .ToListAsync();
+        }
+
+        public async Task UpdateGame(int gameId, GameModel model)
+        {
+            var game = await repo.GetByIdAsync<Game>(gameId);
+            game.Title = model.Title;
+            game.Description = model.Description;
+            game.Studio = model.Studio;
+            game.Rating = model.Rating;
+            game.CategoryId = model.CategoryId; 
+            game.ImageUrl = model.ImageUrl;
+            game.ModifiedOn = DateTime.Now;
+
+            repo.Update(game);
+           await repo.SaveChangesAsync();
         }
     }
 }

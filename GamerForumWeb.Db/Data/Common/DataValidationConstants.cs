@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GamerForumWeb.Db.Data.Common
+﻿namespace GamerForumWeb.Db.Data.Common
 {
     public class DataValidationConstants
     {

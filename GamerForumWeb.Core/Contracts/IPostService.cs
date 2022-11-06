@@ -4,7 +4,9 @@ namespace GamerForumWeb.Core.Contracts
 {
     public interface IPostService
     {
-        Task<IEnumerable<PostModel>> GetAllGamePost(int gameId);
+        Task<IEnumerable<PostQueryModel>> GetAllGamePost(int gameId);
         Task AddPost(PostModel model, string userId);
+
+        Task DeletePost(int postId);
     }
 }

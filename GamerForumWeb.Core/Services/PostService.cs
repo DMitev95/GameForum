@@ -30,16 +30,22 @@ namespace GamerForumWeb.Core.Services
                 UserId = userId,
                 GameId = model.GameId
             };
-            game.Posts.Add(post);
-            user.Posts.Add(post);
+            game?.Posts.Add(post);
+            user?.Posts.Add(post);
             await dbContext.Posts.AddAsync(post);
             await dbContext.SaveChangesAsync();
 
         }
 
-        public async Task<IEnumerable<PostModel>> GetAllGamePost(int gameId)
+        public async Task DeletePost(int postId)
+        { 
+            await repo.DeleteAsync<Post>(postId);
+            await repo.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<PostQueryModel>> GetAllGamePost(int gameId)
         {
-            return await repo.AllReadonly<Post>().Where(p=>p.GameId == gameId).Select(p => new PostModel()
+            return await repo.AllReadonly<Post>().Where(p=>p.GameId == gameId).Select(p => new PostQueryModel()
             {
                 PostId = p.Id,
                 Title = p.Title,

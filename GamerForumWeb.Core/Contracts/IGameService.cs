@@ -7,10 +7,11 @@ namespace GamerForumWeb.Core.Contracts
     {
         Task<IEnumerable<GamesQueryModel>> AllGames();
         Task<IEnumerable<GamesQueryModel>> GetTopGames();
-        Task<IEnumerable<GamesQueryModel>> GetGameById(int gameId);
+        Task<GameModel> GetGameModelById(int gameId);
         Task AddNewGame(GameModel model);
         Task<IEnumerable<Category>> GetCategories();
         Task DeleteGame(int id);
+        Task UpdateGame(int gameId, GameModel model);
 
     }
 }

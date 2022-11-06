@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 using static GamerForumWeb.Db.Data.Common.DataValidationConstants.Category;
 
 namespace GamerForumWeb.Db.Data.Entities
@@ -14,8 +9,8 @@ namespace GamerForumWeb.Db.Data.Entities
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(MaxCategoryNameLenght)]
-        public string Name { get; set; }
+        [StringLength(MaxCategoryNameLenght)]
+        public string Name { get; set; } = null!;
 
         public List<Game> GamesCategories { get; set; } = new List<Game>();
 

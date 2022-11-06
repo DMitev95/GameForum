@@ -1,5 +1,4 @@
 ﻿using GamerForumWeb.Core.Contracts;
-using GamerForumWeb.Core.Models.Game;
 using GamerForumWeb.Core.Models.Post;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,14 +15,12 @@ namespace GamerForumWeb.Controllers
         {
             postService = _postService;
         }
-
         public async Task<IActionResult> All(int gameId)
         {
             var model = await postService.GetAllGamePost(gameId);
 
             return View(model);
         }
-
 
         [HttpGet]
         public IActionResult Add(int gameId)
@@ -37,13 +34,18 @@ namespace GamerForumWeb.Controllers
 
         }
 
-
         [HttpPost]
-        //[Route("Add")]
         public async Task<IActionResult> Add(PostModel model)
         {
             var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
             await postService.AddPost(model, userId);
+
+            return RedirectToAction("All", "Post");
+        }
+
+        public async Task<IActionResult> Delete(int postId)
+        {
+            await postService.DeletePost(postId);
 
             return RedirectToAction(nameof(All));
         }

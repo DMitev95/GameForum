@@ -11,8 +11,8 @@ namespace GamerForumWeb.Db.Data.Entities
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(MaxContentLenght)]
-        public string Content { get; set; }
+        [StringLength(MaxContentLenght)]
+        public string Content { get; set; } = null!;
 
         public int Likes { get; set; }
 
@@ -23,12 +23,12 @@ namespace GamerForumWeb.Db.Data.Entities
         public int PostId { get; set; }
 
         [ForeignKey(nameof(PostId))]
-        public virtual Post Post { get; set; }
+        public virtual Post Post { get; set; } = null!;
 
         [Required]
-        public string UserId { get; set; }
+        public string UserId { get; set; } = null!;
 
         [ForeignKey(nameof(UserId))]
-        public virtual User User { get; set; }
+        public virtual User User { get; set; } = null!;
     }
 }
