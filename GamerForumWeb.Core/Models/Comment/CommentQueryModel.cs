@@ -8,6 +8,8 @@
 
         public int Likes { get; set; }
 
+        public string Username { get; set; }
+
         public DateTime CreatedDate { get; set; }
 
         public int PostId { get; set; }

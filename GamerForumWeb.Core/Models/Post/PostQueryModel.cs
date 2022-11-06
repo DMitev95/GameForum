@@ -13,5 +13,8 @@ namespace GamerForumWeb.Core.Models.Post
         public DateTime CreatedOn { get; set; }
 
         public int GameId { get; set; }
+        public string Username { get; set; }
+
+        public string UserId { get; set; } = null!;
     }
 }

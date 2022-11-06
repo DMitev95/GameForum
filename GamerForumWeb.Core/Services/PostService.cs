@@ -51,7 +51,8 @@ namespace GamerForumWeb.Core.Services
                 Title = p.Title,
                 Content = p.Content,
                 CreatedOn = p.CreatedDate,
-                GameId = gameId
+                GameId = gameId,
+                Username = p.User.UserName
             }).ToListAsync();
         }
     }

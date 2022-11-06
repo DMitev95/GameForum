@@ -46,6 +46,7 @@ namespace GamerForumWeb.Core.Services
                 PostId = postId,
                 CreatedDate = c.CreatedDate,
                 UserId = c.UserId,
+                Username = c.User.UserName
             }).ToListAsync();
         }
 
