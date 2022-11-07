@@ -21,7 +21,11 @@ namespace GamerForumWeb.Core.Services
         public async Task AddPost(PostModel model, string userId)
         {
             var game = await dbContext.Games.FirstOrDefaultAsync(g=>g.Id == model.GameId);
+            if (game == null) throw new ArgumentException("Invalid game ID!");
+
             var user = await dbContext.Users.Where(u => u.Id == userId).Include(u => u.Posts).FirstOrDefaultAsync();
+            if (user == null) throw new ArgumentException("Invalid user ID!");
+
             var post = new Post()
             {
                 Title = model.Title,

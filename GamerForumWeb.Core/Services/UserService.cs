@@ -89,11 +89,12 @@ namespace GamerForumWeb.Core.Services
 
             var game = user.Games.FirstOrDefault(b => b.GameId == gameId);
 
-            if (game != null)
+            if (game == null)
             {
-                user.Games.Remove(game);
-                await context.SaveChangesAsync();
+                throw new ArgumentException("Invalid game Id");
             }
+            user.Games.Remove(game);
+            await context.SaveChangesAsync();
         }
     }
 }

@@ -63,6 +63,10 @@ namespace GamerForumWeb.Core.Services
         public async Task<GameModel> GetGameModelById(int gameId)
         {
             var game =  await repo.GetByIdAsync<Game>(gameId);
+            if (game == null)
+            {
+                throw new ArgumentException("Invalid game Id!");
+            }
 
             return new GameModel()
             {
@@ -111,6 +115,10 @@ namespace GamerForumWeb.Core.Services
         public async Task UpdateGame(int gameId, GameModel model)
         {
             var game = await repo.GetByIdAsync<Game>(gameId);
+            if (game == null)
+            {
+                throw new ArgumentException("Invalid game ID");
+            }
             game.Title = model.Title;
             game.Description = model.Description;
             game.Studio = model.Studio;

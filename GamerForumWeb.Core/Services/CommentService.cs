@@ -21,7 +21,18 @@ namespace GamerForumWeb.Core.Services
         public async Task AddComment(CommentModel model, string userId)
         {
             var post = await context.Posts.FirstOrDefaultAsync(g => g.Id == model.PostId);
+
+            if (post == null)
+            {
+                throw new ArgumentException("Invalid post ID!");
+            }
+
             var user = await context.Users.Where(u => u.Id == userId).Include(u => u.Posts).FirstOrDefaultAsync();
+
+            if (user == null)
+            {
+                throw new ArgumentException("Invalid user ID!");
+            }
 
             var comment = new PostComment()
             {
@@ -53,6 +64,34 @@ namespace GamerForumWeb.Core.Services
         public async Task DeleteComment(int commentId)
         {
             await repo.DeleteAsync<PostComment>(commentId);
+            await repo.SaveChangesAsync();
+        }
+
+        public async Task<CommentModel> GetCommentById(int commentId)
+        {
+            var comment = await repo.GetByIdAsync<PostComment>(commentId);
+            if (comment == null)
+            {
+                throw new ArgumentException("Invalid game Id!");
+            }
+
+            return new CommentModel()
+            {
+                Content = comment.Content,
+            };
+        }
+
+        public async Task UpdateComment(int commentId, CommentModel model)
+        {
+            var comment = await repo.GetByIdAsync<PostComment>(commentId);
+            if (comment == null)
+            {
+                throw new ArgumentException("Invalid game ID");
+            }
+            comment.Content = model.Content;
+            comment.UpdatedDate = DateTime.Now;
+
+            repo.Update(comment);
             await repo.SaveChangesAsync();
         }
     }

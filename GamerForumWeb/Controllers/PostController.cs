@@ -1,5 +1,6 @@
 ﻿using GamerForumWeb.Core.Contracts;
 using GamerForumWeb.Core.Models.Post;
+using GamerForumWeb.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -37,11 +38,18 @@ namespace GamerForumWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(PostModel model)
         {
-            
-            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-            await postService.AddPost(model, userId);
+            try
+            {
+                var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+                await postService.AddPost(model, userId);
 
-            return RedirectToAction("All", "Post");
+                return RedirectToAction("All", "Post");
+            }
+            catch (Exception e )
+            {
+                var erroMassage = new ErrorViewModel { RequestId = e.Message };
+                return View("Error", erroMassage);
+            }          
         }
 
         public async Task<IActionResult> Delete(int postId)

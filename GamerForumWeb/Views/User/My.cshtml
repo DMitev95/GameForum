@@ -21,8 +21,9 @@
                 <p class="mb-0">Rating: @game.Rating</p>
                 <p>Category: @game.Category</p>
             </div>
-          
+            <a asp-controller="Post" asp-action="Add" asp-route-gameId="@game.Id" class="btn btn-outline-success">Add Post</a>
+            <a asp-controller="Post" asp-action="All" asp-route-gameId="@game.Id" class="btn btn-outline-info">All Posts</a>
             <a asp-controller="User" asp-action="RemoveFromCollection" asp-route-gameId="@game.Id" class="btn btn-outline-danger">Remove from favorite!</a>
         </div>
     }
-</div
+</div>

@@ -2,6 +2,7 @@
 using GamerForumWeb.Core.Models.Game;
 using Microsoft.AspNetCore.Authorization;
 using GamerForumWeb.Core.Contracts;
+using GamerForumWeb.Models;
 
 namespace GamerForumWeb.Controllers
 {
@@ -28,13 +29,6 @@ namespace GamerForumWeb.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> Mine()
-        {
-            var model = new GamesQueryModel();
-
-            return View(model);
-        }
-
 
         [HttpGet]
         public async Task<IActionResult> Add()
@@ -55,9 +49,17 @@ namespace GamerForumWeb.Controllers
             {
                 return View(model);
             }
-            await gameService.AddNewGame(model);
+            try
+            {
+                await gameService.AddNewGame(model);
 
-            return RedirectToAction(nameof(All));
+                return RedirectToAction(nameof(All));
+            }
+            catch (Exception e )
+            {
+                var erroMassage = new ErrorViewModel { RequestId = e.Message };
+                return View("Error", erroMassage);
+            }            
         }
 
 
@@ -84,9 +86,17 @@ namespace GamerForumWeb.Controllers
                 return View(model);
             }
 
-            await gameService.UpdateGame(gameId, model);
+            try
+            {
+                await gameService.UpdateGame(gameId, model);
 
-            return RedirectToAction(nameof(All));
+                return RedirectToAction(nameof(All));
+            }
+            catch (Exception e )
+            {               
+                var erroMassage = new ErrorViewModel { RequestId = e.Message };
+                return View("Error", erroMassage);
+            }           
         }
     }
 }
