@@ -7,26 +7,39 @@
 <h2 class="text-center">@ViewBag.Title</h2>
 <hr />
 
-<div class="text-center row">
+<div class="text-center row gap-1 justify-content-center">
     @foreach (var game in Model)
     {
-        <div class="card col-4" style="width: 20rem; ">
-            <img class="card-img-top" style="width: 18rem;"
-             src="@game.ImageUrl" alt="Book Image">
+       <div class="card col-5">
+            <h3 class="card-header">@game.Title</h3>
             <div class="card-body">
-
-                <h5 class="card-title mt-1">@game.Title</h5>
-                <p class="mb-0">Studio: @game.Studio</p>
-                <p class="mb-0">Description: @game.Description</p>
-                <p class="mb-0">Rating: @game.Rating</p>
-                <p>Category: @game.Category</p>
+                <h5 class="card-title">Studio:</h5>
+                <h6 class="card-subtitle text-muted">@game.Studio</h6>
             </div>
-          
-            <a asp-controller="User" asp-action="AddToCollection" asp-route-gameId="@game.Id" class="btn btn-outline-success">Add as Favorite</a>
-            <a asp-controller="Post" asp-action="Add" asp-route-gameId="@game.Id" class="btn btn-outline-success">Add Post</a>
-            <a asp-controller="Post" asp-action="All" asp-route-gameId="@game.Id" class="btn btn-outline-info">All Post</a>
-            <a asp-controller="Game" asp-action="Edit" asp-route-gameId="@game.Id" class="btn btn-outline-warning">Edit Game</a>
-            <a asp-controller="Game" asp-action="Delete" asp-route-gameId="@game.Id" class="btn btn-outline-danger">Delete</a>
+            <img class="center-block" style="width: 33rem; height: 20rem;"
+             src="@game.ImageUrl" alt="Game Image">
+            <div class="card-body">
+                <h4 class="card-text">Description:</h4>
+                <p class="list-group-item">@game.Description</p>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Rating:</h5>
+                <h6 class="card-subtitle text-muted">@game.Rating</h6>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Rating:</h5>
+                <h6 class="card-subtitle text-muted">@game.Category</h6>
+            </div>
+            <div class="card-body">
+                
+            </div>
+            <div class="card-footer text-muted gap-2">
+                <a asp-controller="User" asp-action="AddToCollection" asp-route-gameId="@game.Id" class="btn btn-outline-success">Add as Favorite</a>
+                <a asp-controller="Post" asp-action="Add" asp-route-gameId="@game.Id" class="btn btn-outline-success">Add Post</a>
+                <a asp-controller="Post" asp-action="All" asp-route-gameId="@game.Id" class="btn btn-outline-info">All Posts</a>
+                <a asp-controller="Game" asp-action="Edit" asp-route-gameId="@game.Id" class="btn btn-outline-warning">Edit Game</a>
+                <a asp-controller="Game" asp-action="Delete" asp-route-gameId="@game.Id" class="btn btn-outline-danger">Delete</a>
+            </div>
         </div>
     }
 </div>
