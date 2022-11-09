@@ -13,6 +13,7 @@ namespace GamerForumWeb.Core.Contracts
         Task DeleteGame(int id);
         Task UpdateGame(int gameId, GameModel model);
         Task<IEnumerable<GamesQueryModel>> GetGamesByCategory(int categoryId);
+        Task<GamesQueryModel> FindeGameByName(string gameName);
 
     }
 }

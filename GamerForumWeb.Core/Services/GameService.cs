@@ -55,6 +55,24 @@ namespace GamerForumWeb.Core.Services
             await repo.SaveChangesAsync();
         }
 
+        public async Task<GamesQueryModel> FindeGameByName(string gameName)
+        {
+            var game =  await context.Games.FirstOrDefaultAsync(g => g.Title == gameName);
+            var category = await context.Categories.FirstOrDefaultAsync(c => c.Id == game.CategoryId);
+
+            return new GamesQueryModel()
+            {
+                Id = game.Id,
+                ImageUrl = game.ImageUrl,
+                Title = game.Title,
+                Description = game.Description,
+                Rating = game.Rating,
+                Studio = game.Studio,
+                Category = category.Name
+            };
+           
+        }
+
         public async Task<IEnumerable<Category>> GetCategories()
         {
             return await context.Categories.ToListAsync();

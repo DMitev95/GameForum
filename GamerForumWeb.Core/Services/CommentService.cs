@@ -1,5 +1,6 @@
 ﻿using GamerForumWeb.Core.Contracts;
 using GamerForumWeb.Core.Models.Comment;
+using GamerForumWeb.Core.Models.Post;
 using GamerForumWeb.Db.Data;
 using GamerForumWeb.Db.Data.Entities;
 using GamerForumWeb.Db.Repository;
@@ -48,17 +49,28 @@ namespace GamerForumWeb.Core.Services
             await repo.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<CommentQueryModel>> AllComments(int postId)
+        public async Task<PostQueryModel> AllComments(int postId)
         {
-            return await repo.AllReadonly<PostComment>().Where(c => c.PostId == postId).Select(c => new CommentQueryModel()
+            //var p = await repo.GetByIdAsync<Post>(postId);
+            var p = await context.Posts.Where(p => p.Id == postId)
+               .Include(pc => pc.Comments)
+               .FirstOrDefaultAsync();
+            if (p == null)
             {
-                Id = c.Id,
-                Content = c.Content,
-                PostId = postId,
-                CreatedDate = c.CreatedDate,
-                UserId = c.UserId,
-                Username = c.User.UserName
-            }).ToListAsync();
+                throw new ArgumentException("Invalid post ID!");
+            }
+            var user = await context.Users.FirstOrDefaultAsync(u => u.Id == p.UserId);
+            var allComents = new PostQueryModel()
+            {
+                PostId = p.Id,
+                Title = p.Title,
+                Content = p.Content,
+                UserId = p.UserId,
+                Username = user.UserName,
+                CreatedOn = p.CreatedDate,
+                Comments = p.Comments
+            };
+            return allComents;
         }
 
         public async Task DeleteComment(int commentId)

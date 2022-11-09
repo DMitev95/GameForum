@@ -34,7 +34,7 @@ namespace GamerForumWeb.Controllers
             {
                 var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
                 await commentService.AddComment(model, userId);
-                return RedirectToAction(nameof(All));
+                return View();
             }
             catch (Exception e)
             {
@@ -46,9 +46,18 @@ namespace GamerForumWeb.Controllers
 
         public async Task<IActionResult> All(int postId)
         {
-            var model = await commentService.AllComments(postId);
+            try
+            {
+                var model = await commentService.AllComments(postId);
 
-            return View(model);
+                return View(model);
+            }
+            catch (Exception e)
+            {
+                var erroMassage = new ErrorViewModel { RequestId = e.Message };
+                return View("Error", erroMassage);
+            }
+
         }
 
         public async Task<IActionResult> Delete(int commentId)

@@ -29,6 +29,12 @@ namespace GamerForumWeb.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> FindeByName(string id)
+        {
+            var model = await gameService.FindeGameByName(id);
+
+            return View(model);
+        }
 
         [HttpGet]
         public async Task<IActionResult> Add()

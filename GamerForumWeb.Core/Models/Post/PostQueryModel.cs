@@ -1,4 +1,4 @@
-﻿
+﻿using GamerForumWeb.Db.Data.Entities;
 
 namespace GamerForumWeb.Core.Models.Post
 {
@@ -6,15 +6,18 @@ namespace GamerForumWeb.Core.Models.Post
     {
         public int PostId { get; set; }
 
-        public string Title { get; set; }
+        public string? Title { get; set; }
 
-        public string Content { get; set; }
+        public string? Content { get; set; }
 
         public DateTime CreatedOn { get; set; }
 
-        public int GameId { get; set; }
-        public string Username { get; set; }
+        public int? GameId { get; set; }
 
-        public string UserId { get; set; } = null!;
+        public string? Username { get; set; }
+
+        public List<PostComment> Comments { get; set; } = new List<PostComment>();
+
+        public string? UserId { get; set; }
     }
 }

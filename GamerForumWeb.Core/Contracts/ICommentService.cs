@@ -1,4 +1,5 @@
 ﻿using GamerForumWeb.Core.Models.Comment;
+using GamerForumWeb.Core.Models.Post;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace GamerForumWeb.Core.Contracts
     {
         Task AddComment(CommentModel model, string userId);
 
-        Task<IEnumerable<CommentQueryModel>> AllComments(int postId);
+        Task<PostQueryModel> AllComments(int postId);
 
         Task DeleteComment(int commentId);
         Task<CommentModel> GetCommentById(int commentId);
