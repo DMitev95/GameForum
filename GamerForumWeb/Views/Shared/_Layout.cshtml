@@ -45,65 +45,17 @@
                             </class>
                         }
                     </ul>
-                    <div class="card" style="margin-top:8px;">
-                        @using (Html.BeginForm("FindeByName", "Game", FormMethod.Get))
-                        {
-                            <ul class="nav navbar-nav">
-                                <li>@Html.TextBox("id", ViewBag.CurrentFilter as string)</li>
-                                <li><input type="submit" value="Search" /></li>
-                            </ul>
-                        }
-                    </div>
-                    @*<form class="d-flex">
-                        <input class="form-control me-sm-2" type="text" placeholder="Search">
-                        <button class="btn btn-outline-secondary my-2 my-sm-0" asp-controller="Game" asp-action="FindeByName">Search</button>
-                    </form>*@
+                    @if (User?.Identity?.IsAuthenticated ?? false)
+                    {
+                        <form class="d-flex" action="/Game/FindeByName" method="get">
+                            <input class="form-control me-sm-2" type="text" placeholder="Game search by name" id="id" name="id">
+                            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+                        </form>
+                    }
                     <partial name="_LoginPartial" />
                 </div>
             </div>
         </nav>
-        @* <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-        <div class="container-fluid">
-        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">GamerForumWeb</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-        aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-        <ul class="navbar-nav flex-grow-1">
-        <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-        </li>
-        <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </li>
-        @if (User?.Identity?.IsAuthenticated ?? false)
-        {
-        <class class="btn-group">
-        <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-        Select Action
-        </button>
-        <ul class="dropdown-menu">
-        <li class="dropdown-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="Game" asp-action="All">All Games</a>
-        </li>
-        <li class="dropdown-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="Game" asp-action="Add">Add Game</a>
-        </li>
-        <li class="dropdown-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="MyFavoriteGames">My Favorite Game</a>
-        </li>
-        <li class="dropdown-item">
-        <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="AllCategories">Categories</a>
-        </li>
-        </ul>
-        </class>
-        }
-        </ul>
-        <partial name="_LoginPartial" />
-        </div>
-        </div>
-        </nav>*@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
