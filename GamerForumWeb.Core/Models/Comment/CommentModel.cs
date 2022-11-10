@@ -4,7 +4,6 @@ namespace GamerForumWeb.Core.Models.Comment
 {
     public class CommentModel
     {
-
         [Required]
         [StringLength(MaxContentLenght, MinimumLength = MinContentLenght, ErrorMessage = "{0} lenght must be between {2} and {1} characters long!")]
         public string Content { get; set; } = null!;

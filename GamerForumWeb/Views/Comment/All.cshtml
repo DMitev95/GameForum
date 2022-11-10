@@ -25,7 +25,9 @@
                                                 <p class="mb-3">
                                                     @Model.Username <span class="small">@Model.CreatedOn</span>
                                                 </p>
-                                                <a asp-controller="Comment" asp-action="Add" asp-route-postId="@Model.PostId"><i class="fas fa-reply fa-xs"></i><span class="btn btn-outline-success btn-sm"> reply</span></a>
+                                                @*<a asp-controller="Comment" asp-action="Add" asp-route-postId="@Model.PostId"><i class="fas fa-reply fa-xs"></i><span class="btn btn-outline-success btn-sm"> reply</span></a>*@
+                                                @*<a href="@Url.Action("Add", "Comment", new { id = Model.PostId })"><i class="fas fa-reply fa-xs"></i><span class="btn btn-outline-success btn-sm"> reply</span></a>*@
+                                                <a href="@Url.Action("Add", "Comment", new { PostId = Model.PostId })" class="btn btn-outline-success btn-sm">Reply</a>
                                             </div>
                                             <p class="card text-center">
                                                 @Model.Title
@@ -56,6 +58,7 @@
 
                                                         <br />
                                                         <a asp-controller="Comment" asp-action="Edit" asp-route-commentId="@comment.Id" class="btn btn-outline-warning btn-sm">Edit Comment</a>
+                                                         @*<a href="@Url.Action("Edit", "Comment", new { PostId = Model.PostId })" asp-route-commentId="@comment.Id" class="btn btn-outline-success btn-sm">Reply</a>  *@         
                                                         <a asp-controller="Comment" asp-action="Delete" asp-route-commentId="@comment.Id" class="btn btn-outline-danger btn-sm">Delete</a>
                                                     </div>
                                                 </div>

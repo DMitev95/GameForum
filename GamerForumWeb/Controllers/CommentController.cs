@@ -34,7 +34,7 @@ namespace GamerForumWeb.Controllers
             {
                 var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
                 await commentService.AddComment(model, userId);
-                return View();
+                return RedirectToAction("All", new { id = model.PostId });
             }
             catch (Exception e)
             {
@@ -44,11 +44,11 @@ namespace GamerForumWeb.Controllers
 
         }
 
-        public async Task<IActionResult> All(int postId)
+        public async Task<IActionResult> All(int id)
         {
             try
             {
-                var model = await commentService.AllComments(postId);
+                var model = await commentService.AllComments(id);
 
                 return View(model);
             }
@@ -64,7 +64,7 @@ namespace GamerForumWeb.Controllers
         {
             await commentService.DeleteComment(commentId);
 
-            return RedirectToAction(nameof(All));
+            return RedirectToAction("All", "Game");
         }
 
         [HttpGet]
@@ -83,7 +83,7 @@ namespace GamerForumWeb.Controllers
             {
                 await commentService.UpdateComment(commentId, model);
 
-                return RedirectToAction(nameof(All));
+                return RedirectToAction("All", "Game");
             }
             catch (Exception e)
             {
