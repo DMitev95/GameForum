@@ -73,10 +73,17 @@ namespace GamerForumWeb.Core.Services
             return allComents;
         }
 
-        public async Task DeleteComment(int commentId)
+        public async Task<int> DeleteComment(int commentId)
         {
+            var comment = await repo.GetByIdAsync<PostComment>(commentId);
+            if (comment == null)
+            {
+                throw new ArgumentException("Invalid comment!");
+            }
             await repo.DeleteAsync<PostComment>(commentId);
             await repo.SaveChangesAsync();
+
+            return comment.PostId;
         }
 
         public async Task<CommentModel> GetCommentById(int commentId)
@@ -84,7 +91,7 @@ namespace GamerForumWeb.Core.Services
             var comment = await repo.GetByIdAsync<PostComment>(commentId);
             if (comment == null)
             {
-                throw new ArgumentException("Invalid game Id!");
+                throw new ArgumentException("Invalid comment!");
             }
 
             return new CommentModel()
@@ -93,18 +100,20 @@ namespace GamerForumWeb.Core.Services
             };
         }
 
-        public async Task UpdateComment(int commentId, CommentModel model)
+        public async Task<int> UpdateComment(int commentId, CommentModel model)
         {
             var comment = await repo.GetByIdAsync<PostComment>(commentId);
             if (comment == null)
             {
-                throw new ArgumentException("Invalid game ID");
+                throw new ArgumentException("Invalid comment!");
             }
             comment.Content = model.Content;
             comment.UpdatedDate = DateTime.Now;
 
             repo.Update(comment);
             await repo.SaveChangesAsync();
+
+            return comment.PostId;
         }
     }
 }

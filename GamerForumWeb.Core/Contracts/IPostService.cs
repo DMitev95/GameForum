@@ -7,6 +7,6 @@ namespace GamerForumWeb.Core.Contracts
         Task<IEnumerable<PostQueryModel>> GetAllGamePost(int gameId);
         Task AddPost(PostModel model, string userId);
 
-        Task DeletePost(int postId);
+        Task<int> DeletePost(int postId);
     }
 }

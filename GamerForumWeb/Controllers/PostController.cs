@@ -43,7 +43,7 @@ namespace GamerForumWeb.Controllers
                 var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
                 await postService.AddPost(model, userId);
 
-                return RedirectToAction("All", "Post");
+                return RedirectToAction("All", new { gameId = model.GameId });
             }
             catch (Exception e )
             {
@@ -54,9 +54,9 @@ namespace GamerForumWeb.Controllers
 
         public async Task<IActionResult> Delete(int postId)
         {
-            await postService.DeletePost(postId);
+           var gameId = await postService.DeletePost(postId);
 
-            return RedirectToAction(nameof(All));
+            return RedirectToAction("All", new { gameId = gameId });
         }
 
     }

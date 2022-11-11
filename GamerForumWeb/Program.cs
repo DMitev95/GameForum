@@ -1,5 +1,6 @@
 using GamerForumWeb.Db.Data;
 using GamerForumWeb.Db.Data.Entities;
+using GamerForumWeb.ModelBinders;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,7 +20,10 @@ builder.Services.AddDefaultIdentity<User>(options =>
     options.Password.RequireLowercase = false;
 }).AddEntityFrameworkStores<GamerForumWebDbContext>();
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddMvcOptions(options =>
+{
+    options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+});
 builder.Services.AddRazorPages();
 builder.Services.AddApplicationServices();
 builder.Services.ConfigureApplicationCookie(options =>

@@ -14,9 +14,9 @@ namespace GamerForumWeb.Core.Contracts
 
         Task<PostQueryModel> AllComments(int postId);
 
-        Task DeleteComment(int commentId);
+        Task<int> DeleteComment(int commentId);
         Task<CommentModel> GetCommentById(int commentId);
 
-        Task UpdateComment(int commentId, CommentModel model);
+        Task<int> UpdateComment(int commentId, CommentModel model);
     }
 }

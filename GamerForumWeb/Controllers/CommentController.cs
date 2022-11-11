@@ -62,9 +62,9 @@ namespace GamerForumWeb.Controllers
 
         public async Task<IActionResult> Delete(int commentId)
         {
-            await commentService.DeleteComment(commentId);
+            var postId = await commentService.DeleteComment(commentId);
 
-            return RedirectToAction("All", "Game");
+            return RedirectToAction("All", new { id = postId });
         }
 
         [HttpGet]
@@ -81,9 +81,9 @@ namespace GamerForumWeb.Controllers
 
             try
             {
-                await commentService.UpdateComment(commentId, model);
+                var postId = await commentService.UpdateComment(commentId, model);
 
-                return RedirectToAction("All", "Game");
+                return RedirectToAction("All", new { id = postId });
             }
             catch (Exception e)
             {

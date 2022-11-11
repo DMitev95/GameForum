@@ -21,10 +21,10 @@ namespace GamerForumWeb.Core.Services
         public async Task AddPost(PostModel model, string userId)
         {
             var game = await dbContext.Games.FirstOrDefaultAsync(g=>g.Id == model.GameId);
-            if (game == null) throw new ArgumentException("Invalid game ID!");
+            if (game == null) throw new ArgumentException("Invalid game!");
 
             var user = await dbContext.Users.Where(u => u.Id == userId).Include(u => u.Posts).FirstOrDefaultAsync();
-            if (user == null) throw new ArgumentException("Invalid user ID!");
+            if (user == null) throw new ArgumentException("Invalid user!");
 
             var post = new Post()
             {
@@ -41,10 +41,17 @@ namespace GamerForumWeb.Core.Services
 
         }
 
-        public async Task DeletePost(int postId)
-        { 
+        public async Task<int> DeletePost(int postId)
+        {
+            var post = await repo.GetByIdAsync<Post>(postId);
+            if (post == null)
+            {
+                throw new ArgumentException("Invalid post!");
+            }
             await repo.DeleteAsync<Post>(postId);
             await repo.SaveChangesAsync();
+
+            return post.GameId;
         }
 
         public async Task<IEnumerable<PostQueryModel>> GetAllGamePost(int gameId)
