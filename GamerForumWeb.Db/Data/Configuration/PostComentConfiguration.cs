@@ -19,7 +19,7 @@ namespace GamerForumWeb.Db.Data.Configuration
                     Id = 1,
                     Content = "You suck, go fuck yoursef!!!",
                     PostId = 1,
-                    UserId = "c080eac6-2f20-4f29-8717-d059c81f1195"
+                    UserId = "06df5d6a-ae43-4a1e-a3ad-0c9f6ddf777c"
                 }
             };
             return comments;

@@ -5,8 +5,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-namespace GamerForumWeb.Controllers
+namespace GamerForumWeb.Areas.Users.Controllers
 {
+    [Area("Users")]
     [Authorize]
     public class PostController : Controller
     {
@@ -45,18 +46,18 @@ namespace GamerForumWeb.Controllers
 
                 return RedirectToAction("All", new { gameId = model.GameId });
             }
-            catch (Exception e )
+            catch (Exception e)
             {
                 var erroMassage = new ErrorViewModel { RequestId = e.Message };
                 return View("Error", erroMassage);
-            }          
+            }
         }
 
         public async Task<IActionResult> Delete(int postId)
         {
-           var gameId = await postService.DeletePost(postId);
+            var gameId = await postService.DeletePost(postId);
 
-            return RedirectToAction("All", new { gameId = gameId });
+            return RedirectToAction("All", new { gameId });
         }
 
     }

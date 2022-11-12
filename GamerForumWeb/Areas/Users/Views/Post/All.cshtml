@@ -17,7 +17,7 @@
                 Go back and be the furst person who will make post!
             </p>
             <p class="lead">
-                <a asp-controller="Game" asp-action="All" class="btn btn-outline-info">All Games</a>
+                <a asp-area="Users" asp-controller="UserGame" asp-action="All" class="btn btn-outline-info">All Games</a>
             </p>
             <hr class="my-4">            
         </div>
@@ -51,9 +51,9 @@
                                 </div>
                                 <br/>
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <a asp-controller="Comment" asp-action="Add" asp-route-postId="@post.PostId" class="btn btn-outline-success">Add Comment</a>
+                                    <a asp-area="Users" asp-controller="Comment" asp-action="Add" asp-route-postId="@post.PostId" class="btn btn-outline-success">Add Comment</a>
                                     <a href="@Url.Action("All", "Comment", new { id = post.PostId })" class="btn btn-outline-info">All Coments</a>
-                                    <a asp-controller="Post" asp-action="Delete" asp-route-postId="@post.PostId" class="btn btn-outline-danger">Delete Post</a>
+                                    <a asp-area="Users" asp-controller="Post" asp-action="Delete" asp-route-postId="@post.PostId" class="btn btn-outline-danger">Delete Post</a>
 
                                 </div>
                             </div>

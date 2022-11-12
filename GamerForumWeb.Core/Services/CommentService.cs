@@ -83,6 +83,12 @@ namespace GamerForumWeb.Core.Services
             {
                 throw new ArgumentException("Invalid comment!");
             }
+            var vote = await context.Votes.Where(v => v.PostCommentId == commentId).FirstOrDefaultAsync();
+            if (vote != null)
+            {
+                await repo.DeleteAsync<Vote>(vote.Id);
+            }
+            
             await repo.DeleteAsync<PostComment>(commentId);
             await repo.SaveChangesAsync();
 

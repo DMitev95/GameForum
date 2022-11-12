@@ -23,13 +23,13 @@ namespace GamerForumWeb.Db.Data.Entities
         public DateTime? ModifiedOn { get; set; }
 
 
-        [Required]
-        public string UserId { get; set; } = null!;
+        
+        public string UserId { get; set; } 
 
         [ForeignKey(nameof(UserId))]
-        public virtual User User { get; set; } = null!;
+        public User User { get; set; } 
 
-        [Required]
+      
         public int GameId { get; set; }
 
         [ForeignKey(nameof(GameId))]

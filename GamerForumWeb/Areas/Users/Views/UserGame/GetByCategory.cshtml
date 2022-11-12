@@ -1,0 +1,55 @@
+﻿@model IEnumerable<GamesQueryModel>
+
+@{
+    ViewBag.Title = "Games Category";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+<hr />
+
+<div class="text-center row gap-1 justify-content-center">
+    @if (!Model.Any())
+    {
+        <div class="mt-4 p-5 bg-transparent">
+            <h1 class="display-4 text-dark">At this time there are no games with this category!</h1>
+            <p class="lead">
+                <a asp-controller="Category" asp-action="AllCategories" class="btn btn-outline-info">All Categories</a>
+            </p>
+            <hr class="my-4">
+        </div>
+
+    }
+    @foreach (var game in Model)
+    {
+        <div class="card col-5">
+            <h3 class="card-header">@game.Title</h3>
+            <div class="card-body">
+                <h5 class="card-title">Studio:</h5>
+                <h6 class="card-subtitle text-muted">@game.Studio</h6>
+            </div>
+            <img class="center-block" style="width: 33rem; height: 20rem;"
+             src="@game.ImageUrl" alt="Game Image">
+            <div class="card-body">
+                <h4 class="card-text">Description:</h4>
+                <p class="list-group-item">@game.Description</p>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Rating:</h5>
+                <h6 class="card-subtitle text-muted">@game.Rating</h6>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Rating:</h5>
+                <h6 class="card-subtitle text-muted">@game.Category</h6>
+            </div>
+            <div class="card-body">
+            </div>
+            <div class="card-footer text-muted gap-2">
+                <a asp-controller="User" asp-action="AddToCollection" asp-route-gameId="@game.Id" class="btn btn-outline-success">Add as Favorite</a>
+                <a asp-controller="Post" asp-action="Add" asp-route-gameId="@game.Id" class="btn btn-outline-success">Add Post</a>
+                <a asp-controller="Post" asp-action="All" asp-route-gameId="@game.Id" class="btn btn-outline-info">All Posts</a>
+                <a asp-controller="Game" asp-action="Edit" asp-route-gameId="@game.Id" class="btn btn-outline-warning">Edit Game</a>
+                <a asp-controller="Game" asp-action="Delete" asp-route-gameId="@game.Id" class="btn btn-outline-danger">Delete</a>
+            </div>
+        </div>
+    }
+</div>

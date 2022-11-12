@@ -5,8 +5,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-namespace GamerForumWeb.Controllers
+namespace GamerForumWeb.Areas.Users.Controllers
 {
+    [Area("Users")]
     [Authorize]
     public class CommentController : Controller
     {
@@ -97,14 +98,14 @@ namespace GamerForumWeb.Controllers
         public async Task<IActionResult> Like(int commentId)
         {
             var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-            var postId = await this.votesService.VoteAsync(commentId, userId, true);
+            var postId = await votesService.VoteAsync(commentId, userId, true);
             return RedirectToAction("All", new { id = postId });
         }
 
         public async Task<IActionResult> Dislike(int commentId)
         {
             var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-            var postId = await this.votesService.VoteAsync(commentId, userId, false);
+            var postId = await votesService.VoteAsync(commentId, userId, false);
             return RedirectToAction("All", new { id = postId });
         }
     }

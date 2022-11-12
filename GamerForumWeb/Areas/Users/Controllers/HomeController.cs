@@ -3,8 +3,9 @@ using GamerForumWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace GamerForumWeb.Controllers
+namespace GamerForumWeb.Areas.Users.Controllers
 {
+    [Area("Users")]
     public class HomeController : Controller
     {
         private readonly IGameService gameService;

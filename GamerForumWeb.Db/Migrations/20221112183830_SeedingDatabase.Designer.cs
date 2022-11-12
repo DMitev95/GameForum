@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GamerForumWeb.Db.Migrations
 {
     [DbContext(typeof(GamerForumWebDbContext))]
-    [Migration("20221112103834_FixintVoteEntity")]
-    partial class FixintVoteEntity
+    [Migration("20221112183830_SeedingDatabase")]
+    partial class SeedingDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -150,7 +150,7 @@ namespace GamerForumWeb.Db.Migrations
                         {
                             Id = 1,
                             CategoryId = 5,
-                            CreatedDate = new DateTime(2022, 11, 12, 12, 38, 34, 429, DateTimeKind.Local).AddTicks(7768),
+                            CreatedDate = new DateTime(2022, 11, 12, 20, 38, 30, 650, DateTimeKind.Local).AddTicks(1247),
                             Description = "Dog shit game!!!",
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/en/6/65/World_of_Warcraft.png",
                             IsDeleted = false,
@@ -162,7 +162,7 @@ namespace GamerForumWeb.Db.Migrations
                         {
                             Id = 2,
                             CategoryId = 1,
-                            CreatedDate = new DateTime(2022, 11, 12, 12, 38, 34, 429, DateTimeKind.Local).AddTicks(7799),
+                            CreatedDate = new DateTime(2022, 11, 12, 20, 38, 30, 650, DateTimeKind.Local).AddTicks(1279),
                             Description = "Great game",
                             ImageUrl = "https://www.minecraft.net/content/dam/games/minecraft/key-art/CC-Update-Part-II_600x360.jpg",
                             IsDeleted = false,
@@ -216,10 +216,10 @@ namespace GamerForumWeb.Db.Migrations
                         {
                             Id = 1,
                             Content = "I am on quest to kill some dogshit frogs and one is missing?!",
-                            CreatedDate = new DateTime(2022, 11, 12, 12, 38, 34, 429, DateTimeKind.Local).AddTicks(7850),
+                            CreatedDate = new DateTime(2022, 11, 12, 20, 38, 30, 650, DateTimeKind.Local).AddTicks(1327),
                             GameId = 1,
                             Title = "I got stuck in Northrend! Help me plox!!!",
-                            UserId = "c080eac6-2f20-4f29-8717-d059c81f1195"
+                            UserId = "06df5d6a-ae43-4a1e-a3ad-0c9f6ddf777c"
                         });
                 });
 
@@ -265,11 +265,11 @@ namespace GamerForumWeb.Db.Migrations
                         {
                             Id = 1,
                             Content = "You suck, go fuck yoursef!!!",
-                            CreatedDate = new DateTime(2022, 11, 12, 12, 38, 34, 429, DateTimeKind.Local).AddTicks(7894),
+                            CreatedDate = new DateTime(2022, 11, 12, 20, 38, 30, 650, DateTimeKind.Local).AddTicks(1381),
                             Likes = 0,
                             PostId = 1,
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            UserId = "c080eac6-2f20-4f29-8717-d059c81f1195"
+                            UserId = "06df5d6a-ae43-4a1e-a3ad-0c9f6ddf777c"
                         });
                 });
 
@@ -377,7 +377,7 @@ namespace GamerForumWeb.Db.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "c080eac6-2f20-4f29-8717-d059c81f1195",
+                            UserId = "06df5d6a-ae43-4a1e-a3ad-0c9f6ddf777c",
                             GameId = 1
                         });
                 });
@@ -418,10 +418,6 @@ namespace GamerForumWeb.Db.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -438,8 +434,6 @@ namespace GamerForumWeb.Db.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityRole");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -495,10 +489,12 @@ namespace GamerForumWeb.Db.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -535,10 +531,12 @@ namespace GamerForumWeb.Db.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -546,35 +544,6 @@ namespace GamerForumWeb.Db.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("GamerForumWeb.Db.Data.Entities.Role", b =>
-                {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityRole");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasDiscriminator().HasValue("Role");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "1",
-                            ConcurrencyStamp = "3a6a2874-efcb-4bef-90bc-f61ba3b4f7b0",
-                            Name = "Admin",
-                            CreatedOn = new DateTime(2022, 11, 12, 12, 38, 34, 430, DateTimeKind.Local).AddTicks(3387)
-                        },
-                        new
-                        {
-                            Id = "2",
-                            ConcurrencyStamp = "ea0c4424-dc2b-498d-b283-6a57c0d8fedc",
-                            Name = "User",
-                            CreatedOn = new DateTime(2022, 11, 12, 12, 38, 34, 430, DateTimeKind.Local).AddTicks(3403)
-                        });
                 });
 
             modelBuilder.Entity("GamerForumWeb.Db.Data.Entities.Game", b =>

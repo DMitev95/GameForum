@@ -21,7 +21,7 @@ namespace GamerForumWeb.Db.Data.Configuration
                     Title = "I got stuck in Northrend! Help me plox!!!",
                     Content = "I am on quest to kill some dogshit frogs and one is missing?!",
                     GameId = 1,
-                    UserId = "c080eac6-2f20-4f29-8717-d059c81f1195"
+                    UserId = "06df5d6a-ae43-4a1e-a3ad-0c9f6ddf777c"
                 }
             };
             return posts;

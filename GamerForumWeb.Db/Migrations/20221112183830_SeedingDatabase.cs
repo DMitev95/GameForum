@@ -5,24 +5,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GamerForumWeb.Db.Migrations
 {
-    public partial class SeedingTheDataBaseWithDemoFiles : Migration
+    public partial class SeedingDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Posts_Games_GameId",
-                table: "Posts");
-
-            migrationBuilder.AlterColumn<int>(
-                name: "GameId",
-                table: "Posts",
-                type: "int",
-                nullable: false,
-                defaultValue: 0,
-                oldClrType: typeof(int),
-                oldType: "int",
-                oldNullable: true);
-
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "Name" },
@@ -43,43 +29,31 @@ namespace GamerForumWeb.Db.Migrations
             migrationBuilder.InsertData(
                 table: "Games",
                 columns: new[] { "Id", "CategoryId", "CreatedDate", "DeletedOn", "Description", "ImageUrl", "IsDeleted", "ModifiedOn", "Rating", "Studio", "Title" },
-                values: new object[] { 1, 5, new DateTime(2022, 11, 3, 22, 2, 42, 292, DateTimeKind.Local).AddTicks(6124), null, "Dog shit game!!!", "https://upload.wikimedia.org/wikipedia/en/6/65/World_of_Warcraft.png", false, null, 6.0, "Blizzrd", "World of Warcraft" });
+                values: new object[] { 1, 5, new DateTime(2022, 11, 12, 20, 38, 30, 650, DateTimeKind.Local).AddTicks(1247), null, "Dog shit game!!!", "https://upload.wikimedia.org/wikipedia/en/6/65/World_of_Warcraft.png", false, null, 6m, "Blizzrd", "World of Warcraft" });
 
             migrationBuilder.InsertData(
                 table: "Games",
                 columns: new[] { "Id", "CategoryId", "CreatedDate", "DeletedOn", "Description", "ImageUrl", "IsDeleted", "ModifiedOn", "Rating", "Studio", "Title" },
-                values: new object[] { 2, 1, new DateTime(2022, 11, 3, 22, 2, 42, 292, DateTimeKind.Local).AddTicks(6198), null, "Great game", "https://www.minecraft.net/content/dam/games/minecraft/key-art/CC-Update-Part-II_600x360.jpg", false, null, 10.0, "Mojang", "Minecraft" });
+                values: new object[] { 2, 1, new DateTime(2022, 11, 12, 20, 38, 30, 650, DateTimeKind.Local).AddTicks(1279), null, "Great game", "https://www.minecraft.net/content/dam/games/minecraft/key-art/CC-Update-Part-II_600x360.jpg", false, null, 10m, "Mojang", "Minecraft" });
 
             migrationBuilder.InsertData(
                 table: "Posts",
-                columns: new[] { "Id", "Content", "CreatedDate", "DeletedOn", "GameId", "IsDeleted", "ModifiedOn", "Title", "UserId" },
-                values: new object[] { 1, "I am on quest to kill some dogshit frogs and one is missing?!", new DateTime(2022, 11, 3, 22, 2, 42, 292, DateTimeKind.Local).AddTicks(6396), null, 1, false, null, "I got stuck in Northrend! Help me plox!!!", "c080eac6-2f20-4f29-8717-d059c81f1195" });
+                columns: new[] { "Id", "Content", "CreatedDate", "GameId", "ModifiedOn", "Title", "UserId" },
+                values: new object[] { 1, "I am on quest to kill some dogshit frogs and one is missing?!", new DateTime(2022, 11, 12, 20, 38, 30, 650, DateTimeKind.Local).AddTicks(1327), 1, null, "I got stuck in Northrend! Help me plox!!!", "06df5d6a-ae43-4a1e-a3ad-0c9f6ddf777c" });
 
             migrationBuilder.InsertData(
                 table: "UserGames",
                 columns: new[] { "GameId", "UserId" },
-                values: new object[] { 1, "c080eac6-2f20-4f29-8717-d059c81f1195" });
+                values: new object[] { 1, "06df5d6a-ae43-4a1e-a3ad-0c9f6ddf777c" });
 
             migrationBuilder.InsertData(
                 table: "PostsComments",
                 columns: new[] { "Id", "Content", "CreatedDate", "Likes", "PostId", "UpdatedDate", "UserId" },
-                values: new object[] { 1, "You suck, go fuck yoursef!!!", new DateTime(2022, 11, 3, 22, 2, 42, 292, DateTimeKind.Local).AddTicks(6598), 0, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "c080eac6-2f20-4f29-8717-d059c81f1195" });
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Posts_Games_GameId",
-                table: "Posts",
-                column: "GameId",
-                principalTable: "Games",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                values: new object[] { 1, "You suck, go fuck yoursef!!!", new DateTime(2022, 11, 12, 20, 38, 30, 650, DateTimeKind.Local).AddTicks(1381), 0, 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "06df5d6a-ae43-4a1e-a3ad-0c9f6ddf777c" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Posts_Games_GameId",
-                table: "Posts");
-
             migrationBuilder.DeleteData(
                 table: "Categories",
                 keyColumn: "Id",
@@ -133,7 +107,7 @@ namespace GamerForumWeb.Db.Migrations
             migrationBuilder.DeleteData(
                 table: "UserGames",
                 keyColumns: new[] { "GameId", "UserId" },
-                keyValues: new object[] { 1, "c080eac6-2f20-4f29-8717-d059c81f1195" });
+                keyValues: new object[] { 1, "06df5d6a-ae43-4a1e-a3ad-0c9f6ddf777c" });
 
             migrationBuilder.DeleteData(
                 table: "Categories",
@@ -154,21 +128,6 @@ namespace GamerForumWeb.Db.Migrations
                 table: "Categories",
                 keyColumn: "Id",
                 keyValue: 5);
-
-            migrationBuilder.AlterColumn<int>(
-                name: "GameId",
-                table: "Posts",
-                type: "int",
-                nullable: true,
-                oldClrType: typeof(int),
-                oldType: "int");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Posts_Games_GameId",
-                table: "Posts",
-                column: "GameId",
-                principalTable: "Games",
-                principalColumn: "Id");
         }
     }
 }

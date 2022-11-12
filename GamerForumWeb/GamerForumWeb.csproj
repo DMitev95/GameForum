@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -8,15 +8,31 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Admin\Data\**" />
+    <Compile Remove="Areas\Admin\Models\**" />
+    <Compile Remove="Areas\Users\Data\**" />
+    <Compile Remove="Areas\Users\Models\**" />
     <Compile Remove="Views\Categories\**" />
+    <Content Remove="Areas\Admin\Data\**" />
+    <Content Remove="Areas\Admin\Models\**" />
+    <Content Remove="Areas\Users\Data\**" />
+    <Content Remove="Areas\Users\Models\**" />
     <Content Remove="Views\Categories\**" />
+    <EmbeddedResource Remove="Areas\Admin\Data\**" />
+    <EmbeddedResource Remove="Areas\Admin\Models\**" />
+    <EmbeddedResource Remove="Areas\Users\Data\**" />
+    <EmbeddedResource Remove="Areas\Users\Models\**" />
     <EmbeddedResource Remove="Views\Categories\**" />
+    <None Remove="Areas\Admin\Data\**" />
+    <None Remove="Areas\Admin\Models\**" />
+    <None Remove="Areas\Users\Data\**" />
+    <None Remove="Areas\Users\Models\**" />
     <None Remove="Views\Categories\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Views\Comment\Add.cshtml" />
-    <None Include="Views\Comment\All.cshtml" />
+    <None Include="Areas\Users\Views\Comment\Add.cshtml" />
+    <None Include="Areas\Users\Views\Comment\All.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,13 +49,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GamerForumWeb.Core\GamerForumWeb.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Areas\Game\Controllers\" />
-    <Folder Include="Areas\Game\Data\" />
-    <Folder Include="Areas\Game\Models\" />
-    <Folder Include="Areas\Game\Views\" />
   </ItemGroup>
 
 </Project>

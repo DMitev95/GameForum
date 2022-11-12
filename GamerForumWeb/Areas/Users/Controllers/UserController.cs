@@ -1,16 +1,19 @@
 ﻿using GamerForumWeb.Core.Contracts;
 using GamerForumWeb.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-namespace GamerForumWeb.Controllers
+namespace GamerForumWeb.Areas.Users.Controllers
 {
+    [Area("Users")]
+    [Authorize]
     public class UserController : Controller
     {
         private readonly IUserService userService;
         public UserController(IUserService _userService)
         {
-           userService = _userService;
+            userService = _userService;
         }
 
         public async Task<IActionResult> AddToCollection(int gameId)

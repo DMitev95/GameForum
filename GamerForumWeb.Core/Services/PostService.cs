@@ -49,7 +49,7 @@ namespace GamerForumWeb.Core.Services
             if (post == null)
             {
                 throw new ArgumentException("Invalid post!");
-            }
+            }            
             await repo.DeleteAsync<Post>(postId);
             await repo.SaveChangesAsync();
 

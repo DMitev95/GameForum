@@ -1,8 +1,11 @@
 ﻿using GamerForumWeb.Core.Contracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace GamerForumWeb.Controllers
-{    
+namespace GamerForumWeb.Areas.Users.Controllers
+{
+    [Area("Users")]
+    [Authorize]
     public class CategoryController : Controller
     {
         private readonly ICategoryService categoryService;

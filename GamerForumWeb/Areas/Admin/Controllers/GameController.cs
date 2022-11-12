@@ -4,8 +4,9 @@ using Microsoft.AspNetCore.Authorization;
 using GamerForumWeb.Core.Contracts;
 using GamerForumWeb.Models;
 
-namespace GamerForumWeb.Controllers
+namespace GamerForumWeb.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     [Authorize]
     public class GameController : Controller
     {
@@ -40,7 +41,7 @@ namespace GamerForumWeb.Controllers
         public async Task<IActionResult> Add()
         {
             var model = new GameModel()
-            { 
+            {
                 Categories = await gameService.GetCategories(),
             };
 
@@ -61,17 +62,17 @@ namespace GamerForumWeb.Controllers
 
                 return RedirectToAction(nameof(All));
             }
-            catch (Exception e )
+            catch (Exception e)
             {
                 var erroMassage = new ErrorViewModel { RequestId = e.Message };
                 return View("Error", erroMassage);
-            }            
+            }
         }
 
 
         public async Task<IActionResult> Delete(int gameId)
         {
-           await gameService.DeleteGame(gameId);
+            await gameService.DeleteGame(gameId);
 
             return RedirectToAction(nameof(All));
         }
@@ -81,7 +82,7 @@ namespace GamerForumWeb.Controllers
         {
             var game = await gameService.GetGameModelById(gameId);
 
-            return View(game);            
+            return View(game);
         }
 
         [HttpPost]
@@ -98,11 +99,11 @@ namespace GamerForumWeb.Controllers
 
                 return RedirectToAction(nameof(All));
             }
-            catch (Exception e )
-            {               
+            catch (Exception e)
+            {
                 var erroMassage = new ErrorViewModel { RequestId = e.Message };
                 return View("Error", erroMassage);
-            }           
+            }
         }
     }
 }

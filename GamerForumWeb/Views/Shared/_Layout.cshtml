@@ -19,7 +19,7 @@
                 <div class="collapse navbar-collapse" id="navbarColor01">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="btn text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="btn text-dark" asp-area="User" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                         @if (User?.Identity?.IsAuthenticated ?? false)
                         {
@@ -29,25 +29,27 @@
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li class="dropdown-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Game" asp-action="All">All Games</a>
+                                        <a class="nav-link text-dark" asp-area="Admin" asp-controller="Game" asp-action="All">All Games</a>
                                     </li>
                                     <li class="dropdown-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Game" asp-action="Add">Add Game</a>
+                                        <a class="nav-link text-dark" asp-area="Admin" asp-controller="Game" asp-action="Add">Add Game</a>
                                     </li>
                                     <li class="dropdown-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="MyFavoriteGames">My Favorite Game</a>
+                                        <a class="nav-link text-dark" asp-area="Users" asp-controller="UserGame" asp-action="All">Users Games</a>
                                     </li>
                                     <li class="dropdown-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="AllCategories">Categories</a>
+                                        <a class="nav-link text-dark" asp-area="Users" asp-controller="User" asp-action="MyFavoriteGames">My Favorite Game</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a class="nav-link text-dark" asp-area="Users" asp-controller="Category" asp-action="AllCategories">Categories</a>
                                     </li>
                                 </ul>
-
                             </class>
                         }
                     </ul>
                     @if (User?.Identity?.IsAuthenticated ?? false)
                     {
-                        <form class="d-flex" action="/Game/FindeByName" method="get">
+                        <form class="d-flex" action="/Users/UserGame/FindeByName" method="get">
                             <input class="form-control me-sm-2" type="text" placeholder="Game search by name" id="id" name="id">
                             <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
                         </form>

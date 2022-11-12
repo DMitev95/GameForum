@@ -1,6 +1,5 @@
 ﻿using GamerForumWeb.Db.Data.Configuration;
 using GamerForumWeb.Db.Data.Entities;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,10 +22,6 @@ namespace GamerForumWeb.Db.Data
             builder.Entity<UserGames>()
                 .HasKey(x => new { x.UserId, x.GameId });
 
-            
-            //builder.Entity<IdentityUserRole<string>>().HasKey(r =>
-            //  new { UserId = r.UserId, RoleId = r.RoleId });
-
             builder.Entity<Post>()
                 .HasOne(e => e.User)
                 .WithMany(c => c.Posts)
@@ -37,13 +32,17 @@ namespace GamerForumWeb.Db.Data
                 .WithMany(c => c.Votes)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.Entity<User>()
+                .HasMany(u => u.Posts)
+                .WithOne(p => p.User);
+
             builder.ApplyConfiguration(new CategoryConfiguration());
             builder.ApplyConfiguration(new GameConfiguration());
             builder.ApplyConfiguration(new PostConfiguration());
             builder.ApplyConfiguration(new PostComentConfiguration());
             builder.ApplyConfiguration(new UserGamesConfiguration());
-            builder.ApplyConfiguration(new RoleConfiguration());
-            //builder.ApplyConfiguration(new UserRoleConfiguration());
+            //builder.ApplyConfiguration(new RoleConfiguration());
+
 
             builder.Entity<User>().Property(u => u.UserName).HasMaxLength(20).IsRequired();
 

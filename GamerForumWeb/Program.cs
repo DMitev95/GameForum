@@ -1,6 +1,7 @@
 using GamerForumWeb.Db.Data;
 using GamerForumWeb.Db.Data.Entities;
 using GamerForumWeb.ModelBinders;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -31,15 +32,15 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LoginPath = "/User/Login";
 });
 
-//builder.Services.AddControllersWithViews().AddMvcOptions(options =>
-//{
-//    options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
-//});
-
-builder.Services.AddMvc(options =>
+builder.Services.AddControllersWithViews().AddMvcOptions(options =>
 {
-    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+    options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
 });
+
+//builder.Services.AddMvc(options =>
+//{
+//    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+//});
 
 var app = builder.Build();
 
@@ -65,7 +66,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{area=Users}/{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
 app.Run();

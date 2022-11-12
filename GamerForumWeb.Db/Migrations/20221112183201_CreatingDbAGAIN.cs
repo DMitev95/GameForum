@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GamerForumWeb.Db.Migrations
 {
-    public partial class CreatingDb : Migration
+    public partial class CreatingDbAGAIN : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -33,8 +33,6 @@ namespace GamerForumWeb.Db.Migrations
                     Country = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
@@ -183,7 +181,7 @@ namespace GamerForumWeb.Db.Migrations
                     Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Studio = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: false),
-                    Rating = table.Column<double>(type: "float", nullable: false),
+                    Rating = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -212,10 +210,8 @@ namespace GamerForumWeb.Db.Migrations
                     Content = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    GameId = table.Column<int>(type: "int", nullable: true)
+                    GameId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -230,7 +226,8 @@ namespace GamerForumWeb.Db.Migrations
                         name: "FK_Posts_Games_GameId",
                         column: x => x.GameId,
                         principalTable: "Games",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -293,7 +290,7 @@ namespace GamerForumWeb.Db.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PostId = table.Column<int>(type: "int", nullable: false),
+                    PostCommentId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false)
                 },
@@ -307,11 +304,11 @@ namespace GamerForumWeb.Db.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Votes_Posts_PostId",
-                        column: x => x.PostId,
-                        principalTable: "Posts",
+                        name: "FK_Votes_PostsComments_PostCommentId",
+                        column: x => x.PostCommentId,
+                        principalTable: "PostsComments",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -384,9 +381,9 @@ namespace GamerForumWeb.Db.Migrations
                 column: "GameId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Votes_PostId",
+                name: "IX_Votes_PostCommentId",
                 table: "Votes",
-                column: "PostId");
+                column: "PostCommentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Votes_UserId",
@@ -412,9 +409,6 @@ namespace GamerForumWeb.Db.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "PostsComments");
-
-            migrationBuilder.DropTable(
                 name: "UserGames");
 
             migrationBuilder.DropTable(
@@ -422,6 +416,9 @@ namespace GamerForumWeb.Db.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "PostsComments");
 
             migrationBuilder.DropTable(
                 name: "Posts");
