@@ -11,10 +11,12 @@ namespace GamerForumWeb.Controllers
     public class CommentController : Controller
     {
         private readonly ICommentService commentService;
+        private readonly IVoteService votesService;
 
-        public CommentController(ICommentService _commentService)
+        public CommentController(ICommentService _commentService, IVoteService _votesService)
         {
             commentService = _commentService;
+            votesService = _votesService;
         }
 
         [HttpGet]
@@ -90,6 +92,20 @@ namespace GamerForumWeb.Controllers
                 var erroMassage = new ErrorViewModel { RequestId = e.Message };
                 return View("Error", erroMassage);
             }
+        }
+
+        public async Task<IActionResult> Like(int commentId)
+        {
+            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            var postId = await this.votesService.VoteAsync(commentId, userId, true);
+            return RedirectToAction("All", new { id = postId });
+        }
+
+        public async Task<IActionResult> Dislike(int commentId)
+        {
+            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            var postId = await this.votesService.VoteAsync(commentId, userId, false);
+            return RedirectToAction("All", new { id = postId });
         }
     }
 }

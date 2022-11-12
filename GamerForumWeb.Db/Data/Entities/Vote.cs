@@ -8,10 +8,10 @@ namespace GamerForumWeb.Db.Data.Entities
         [Key]
         public int Id { get; set; }
 
-        public int PostId { get; set; }
+        public int PostCommentId { get; set; }
 
-        [ForeignKey(nameof(PostId))]
-        public virtual Post Post { get; set; } = null!;
+        [ForeignKey(nameof(PostCommentId))]
+        public virtual PostComment Comment { get; set; } = null!;
 
         [Required]
         public string UserId { get; set; } = null!;

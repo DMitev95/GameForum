@@ -4,6 +4,7 @@ using GamerForumWeb.Db.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GamerForumWeb.Db.Migrations
 {
     [DbContext(typeof(GamerForumWebDbContext))]
-    partial class GamerForumWebDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221112091827_AddingRoles")]
+    partial class AddingRoles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -148,7 +150,7 @@ namespace GamerForumWeb.Db.Migrations
                         {
                             Id = 1,
                             CategoryId = 5,
-                            CreatedDate = new DateTime(2022, 11, 12, 12, 38, 34, 429, DateTimeKind.Local).AddTicks(7768),
+                            CreatedDate = new DateTime(2022, 11, 12, 11, 18, 27, 492, DateTimeKind.Local).AddTicks(3237),
                             Description = "Dog shit game!!!",
                             ImageUrl = "https://upload.wikimedia.org/wikipedia/en/6/65/World_of_Warcraft.png",
                             IsDeleted = false,
@@ -160,7 +162,7 @@ namespace GamerForumWeb.Db.Migrations
                         {
                             Id = 2,
                             CategoryId = 1,
-                            CreatedDate = new DateTime(2022, 11, 12, 12, 38, 34, 429, DateTimeKind.Local).AddTicks(7799),
+                            CreatedDate = new DateTime(2022, 11, 12, 11, 18, 27, 492, DateTimeKind.Local).AddTicks(3272),
                             Description = "Great game",
                             ImageUrl = "https://www.minecraft.net/content/dam/games/minecraft/key-art/CC-Update-Part-II_600x360.jpg",
                             IsDeleted = false,
@@ -214,7 +216,7 @@ namespace GamerForumWeb.Db.Migrations
                         {
                             Id = 1,
                             Content = "I am on quest to kill some dogshit frogs and one is missing?!",
-                            CreatedDate = new DateTime(2022, 11, 12, 12, 38, 34, 429, DateTimeKind.Local).AddTicks(7850),
+                            CreatedDate = new DateTime(2022, 11, 12, 11, 18, 27, 492, DateTimeKind.Local).AddTicks(3353),
                             GameId = 1,
                             Title = "I got stuck in Northrend! Help me plox!!!",
                             UserId = "c080eac6-2f20-4f29-8717-d059c81f1195"
@@ -263,7 +265,7 @@ namespace GamerForumWeb.Db.Migrations
                         {
                             Id = 1,
                             Content = "You suck, go fuck yoursef!!!",
-                            CreatedDate = new DateTime(2022, 11, 12, 12, 38, 34, 429, DateTimeKind.Local).AddTicks(7894),
+                            CreatedDate = new DateTime(2022, 11, 12, 11, 18, 27, 492, DateTimeKind.Local).AddTicks(3419),
                             Likes = 0,
                             PostId = 1,
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -388,7 +390,7 @@ namespace GamerForumWeb.Db.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("PostCommentId")
+                    b.Property<int>("PostId")
                         .HasColumnType("int");
 
                     b.Property<int>("Type")
@@ -400,7 +402,7 @@ namespace GamerForumWeb.Db.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PostCommentId");
+                    b.HasIndex("PostId");
 
                     b.HasIndex("UserId");
 
@@ -562,16 +564,16 @@ namespace GamerForumWeb.Db.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "3a6a2874-efcb-4bef-90bc-f61ba3b4f7b0",
+                            ConcurrencyStamp = "edebbf8c-6d34-4085-ab24-db5e3a38f8e1",
                             Name = "Admin",
-                            CreatedOn = new DateTime(2022, 11, 12, 12, 38, 34, 430, DateTimeKind.Local).AddTicks(3387)
+                            CreatedOn = new DateTime(2022, 11, 12, 11, 18, 27, 492, DateTimeKind.Local).AddTicks(8881)
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "ea0c4424-dc2b-498d-b283-6a57c0d8fedc",
+                            ConcurrencyStamp = "28c9f935-9eaf-4a9b-9820-450d4bce0c47",
                             Name = "User",
-                            CreatedOn = new DateTime(2022, 11, 12, 12, 38, 34, 430, DateTimeKind.Local).AddTicks(3403)
+                            CreatedOn = new DateTime(2022, 11, 12, 11, 18, 27, 492, DateTimeKind.Local).AddTicks(8906)
                         });
                 });
 
@@ -645,10 +647,10 @@ namespace GamerForumWeb.Db.Migrations
 
             modelBuilder.Entity("GamerForumWeb.Db.Data.Entities.Vote", b =>
                 {
-                    b.HasOne("GamerForumWeb.Db.Data.Entities.PostComment", "Comment")
+                    b.HasOne("GamerForumWeb.Db.Data.Entities.Post", "Post")
                         .WithMany("Votes")
-                        .HasForeignKey("PostCommentId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("GamerForumWeb.Db.Data.Entities.User", "User")
@@ -657,7 +659,7 @@ namespace GamerForumWeb.Db.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Comment");
+                    b.Navigation("Post");
 
                     b.Navigation("User");
                 });
@@ -728,10 +730,7 @@ namespace GamerForumWeb.Db.Migrations
             modelBuilder.Entity("GamerForumWeb.Db.Data.Entities.Post", b =>
                 {
                     b.Navigation("Comments");
-                });
 
-            modelBuilder.Entity("GamerForumWeb.Db.Data.Entities.PostComment", b =>
-                {
                     b.Navigation("Votes");
                 });
 

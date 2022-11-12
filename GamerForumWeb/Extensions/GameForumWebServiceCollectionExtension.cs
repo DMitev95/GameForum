@@ -14,6 +14,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<ICommentService, CommentService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IVoteService, VoteService>();
             return services;
         }
     }

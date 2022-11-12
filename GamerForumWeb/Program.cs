@@ -13,17 +13,17 @@ builder.Services.AddDbContext<GamerForumWebDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddIdentity<User, Role>(options =>
+builder.Services.AddDefaultIdentity<User>(options =>
 {
     options.SignIn.RequireConfirmedAccount = true;
     options.Password.RequiredLength = 10;
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequireDigit = false;
     options.Password.RequireLowercase = false;
-}).AddDefaultTokenProviders().AddEntityFrameworkStores<GamerForumWebDbContext>();
+}).AddEntityFrameworkStores<GamerForumWebDbContext>();
 
 
-//builder.Services.AddRazorPages();
+builder.Services.AddRazorPages();
 builder.Services.AddApplicationServices();
 
 builder.Services.ConfigureApplicationCookie(options =>
@@ -31,10 +31,10 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LoginPath = "/User/Login";
 });
 
-builder.Services.AddControllersWithViews().AddMvcOptions(options =>
-{
-    options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
-});
+//builder.Services.AddControllersWithViews().AddMvcOptions(options =>
+//{
+//    options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+//});
 
 builder.Services.AddMvc(options =>
 {

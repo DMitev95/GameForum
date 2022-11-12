@@ -36,7 +36,6 @@ namespace GamerForumWeb.Db.Data.Entities
         public virtual Game Game { get; set; } = null!;
 
         public List<PostComment> Comments { get; set; } = new List<PostComment>();
-
-        public virtual ICollection<Vote> Votes { get; set; } = new HashSet<Vote>();
+        
     }
 }

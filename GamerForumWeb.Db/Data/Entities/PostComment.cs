@@ -30,5 +30,7 @@ namespace GamerForumWeb.Db.Data.Entities
 
         [ForeignKey(nameof(UserId))]
         public virtual User User { get; set; } = null!;
+
+        public virtual ICollection<Vote> Votes { get; set; } = new HashSet<Vote>();
     }
 }

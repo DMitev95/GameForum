@@ -15,5 +15,7 @@
         public int PostId { get; set; }
 
         public string UserId { get; set; } = null!;
+
+        public int VotesCount { get; set; }
     }
 }

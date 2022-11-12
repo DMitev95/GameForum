@@ -56,6 +56,7 @@ namespace GamerForumWeb.Core.Services
             //var p = await repo.GetByIdAsync<Post>(postId);            
             var p = await context.Posts.Where(p => p.Id == postId)
                .Include(pc => pc.Comments)
+               .ThenInclude(v => v.Votes)
                .FirstOrDefaultAsync();
             if (p == null)
             {
