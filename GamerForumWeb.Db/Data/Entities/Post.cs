@@ -22,9 +22,6 @@ namespace GamerForumWeb.Db.Data.Entities
 
         public DateTime? ModifiedOn { get; set; }
 
-        public bool IsDeleted { get; set; }
-
-        public DateTime? DeletedOn { get; set; }
 
         [Required]
         public string UserId { get; set; } = null!;

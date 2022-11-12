@@ -24,7 +24,7 @@ namespace GamerForumWeb.Db.Data.Entities
         public string Description { get; set; } = null!;
 
         [Required]
-        public double Rating { get; set; }
+        public decimal Rating { get; set; }
 
         [Required]
         public string ImageUrl { get; set; } = null!;

@@ -1,15 +1,15 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GamerForumWeb.Db.Data.Entities
 {
-    public class UserRole : IdentityRole
+    public class UserRole : IdentityUserRole
     {
-        public DateTime CreatedOn { get; set; }
+        [ForeignKey(nameof(UserId))]
+        public User User { get; set; } = null!;
 
-        public DateTime? ModifiedOn { get; set; }
 
-        public bool IsDeleted { get; set; }
-
-        public DateTime? DeletedOn { get; set; }
+        [ForeignKey(nameof(RoleId))]
+        public Role Role { get; set; } = null!;
     }
 }

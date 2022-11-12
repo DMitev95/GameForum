@@ -11,7 +11,7 @@ namespace GamerForumWeb.ModelBinders
                 throw new ArgumentException(nameof(context));
             }
 
-            if (context.Metadata.ModelType == typeof(Decimal) || context.Metadata.ModelType == typeof(Decimal?))
+            if (context.Metadata.ModelType == typeof(decimal) || context.Metadata.ModelType == typeof(decimal?))
             {
                 return new DecimalModelBinder();
             }

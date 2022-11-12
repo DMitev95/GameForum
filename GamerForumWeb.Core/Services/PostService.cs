@@ -3,6 +3,7 @@ using GamerForumWeb.Core.Models.Post;
 using GamerForumWeb.Db.Data;
 using GamerForumWeb.Db.Data.Entities;
 using GamerForumWeb.Db.Repository;
+using Ganss.Xss;
 using Microsoft.EntityFrameworkCore;
 
 namespace GamerForumWeb.Core.Services
@@ -20,6 +21,7 @@ namespace GamerForumWeb.Core.Services
 
         public async Task AddPost(PostModel model, string userId)
         {
+            var sanitizor = new HtmlSanitizer();
             var game = await dbContext.Games.FirstOrDefaultAsync(g=>g.Id == model.GameId);
             if (game == null) throw new ArgumentException("Invalid game!");
 
@@ -28,8 +30,8 @@ namespace GamerForumWeb.Core.Services
 
             var post = new Post()
             {
-                Title = model.Title,
-                Content = model.Content,
+                Title = sanitizor.Sanitize(model.Title),
+                Content = sanitizor.Sanitize(model.Content),
                 CreatedDate = DateTime.Now,
                 UserId = userId,
                 GameId = model.GameId

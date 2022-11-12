@@ -19,7 +19,7 @@ namespace GamerForumWeb.Core.Models.Game
         public string Description { get; set; }
 
         [Required]
-        public double Rating { get; set; }
+        public decimal Rating { get; set; }
 
         [Required]
         public string ImageUrl { get; set; }

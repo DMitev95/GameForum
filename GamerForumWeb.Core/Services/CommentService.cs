@@ -4,6 +4,7 @@ using GamerForumWeb.Core.Models.Post;
 using GamerForumWeb.Db.Data;
 using GamerForumWeb.Db.Data.Entities;
 using GamerForumWeb.Db.Repository;
+using Ganss.Xss;
 using Microsoft.EntityFrameworkCore;
 
 namespace GamerForumWeb.Core.Services
@@ -21,23 +22,24 @@ namespace GamerForumWeb.Core.Services
 
         public async Task AddComment(CommentModel model, string userId)
         {
+            var sanitizor = new HtmlSanitizer();
             var post = await context.Posts.FirstOrDefaultAsync(g => g.Id == model.PostId);
 
             if (post == null)
             {
-                throw new ArgumentException("Invalid post ID!");
+                throw new ArgumentException("Invalid post!");
             }
 
             var user = await context.Users.Where(u => u.Id == userId).Include(u => u.Posts).FirstOrDefaultAsync();
 
             if (user == null)
             {
-                throw new ArgumentException("Invalid user ID!");
+                throw new ArgumentException("Invalid user!");
             }
 
             var comment = new PostComment()
             {
-                Content = model.Content,
+                Content = sanitizor.Sanitize(model.Content),
                 UserId = userId,
                 CreatedDate = DateTime.Now,
                 PostId = model.PostId,
@@ -51,13 +53,13 @@ namespace GamerForumWeb.Core.Services
 
         public async Task<PostQueryModel> AllComments(int postId)
         {
-            //var p = await repo.GetByIdAsync<Post>(postId);
+            //var p = await repo.GetByIdAsync<Post>(postId);            
             var p = await context.Posts.Where(p => p.Id == postId)
                .Include(pc => pc.Comments)
                .FirstOrDefaultAsync();
             if (p == null)
             {
-                throw new ArgumentException("Invalid post ID!");
+                throw new ArgumentException("Invalid post!");
             }
             var user = await context.Users.FirstOrDefaultAsync(u => u.Id == p.UserId);
             var allComents = new PostQueryModel()

@@ -1,6 +1,8 @@
 using GamerForumWeb.Db.Data;
 using GamerForumWeb.Db.Data.Entities;
 using GamerForumWeb.ModelBinders;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,24 +13,32 @@ builder.Services.AddDbContext<GamerForumWebDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<User>(options =>
+builder.Services.AddIdentity<User, Role>(options =>
 {
     options.SignIn.RequireConfirmedAccount = true;
     options.Password.RequiredLength = 10;
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequireDigit = false;
     options.Password.RequireLowercase = false;
-}).AddEntityFrameworkStores<GamerForumWebDbContext>();
+}).AddDefaultTokenProviders().AddEntityFrameworkStores<GamerForumWebDbContext>();
+
+
+//builder.Services.AddRazorPages();
+builder.Services.AddApplicationServices();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/User/Login";
+});
 
 builder.Services.AddControllersWithViews().AddMvcOptions(options =>
 {
     options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
 });
-builder.Services.AddRazorPages();
-builder.Services.AddApplicationServices();
-builder.Services.ConfigureApplicationCookie(options =>
+
+builder.Services.AddMvc(options =>
 {
-    options.LoginPath = "/User/Login";
+    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
 });
 
 var app = builder.Build();

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 
 namespace GamerForumWeb.Controllers
-{
+{    
     public class CategoryController : Controller
     {
         private readonly ICategoryService categoryService;

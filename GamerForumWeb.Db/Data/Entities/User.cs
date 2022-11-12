@@ -21,10 +21,6 @@ namespace GamerForumWeb.Db.Data.Entities
 
         public DateTime? ModifiedOn { get; set; }
 
-        public bool IsDeleted { get; set; }
-
-        public DateTime? DeletedOn { get; set; }
-
         public List<Post> Posts { get; set; } = new List<Post>();
 
         public List<PostComment> Comments { get; set; } = new List<PostComment>();

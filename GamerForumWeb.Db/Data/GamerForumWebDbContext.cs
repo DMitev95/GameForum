@@ -3,8 +3,6 @@ using GamerForumWeb.Db.Data.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-
-
 namespace GamerForumWeb.Db.Data
 {
     public class GamerForumWebDbContext : IdentityDbContext<User>
@@ -24,6 +22,9 @@ namespace GamerForumWeb.Db.Data
             builder.Entity<UserGames>()
                 .HasKey(x => new { x.UserId, x.GameId });
 
+            builder.Entity<UserRole>()
+                .HasKey(x => new { x.UserId, x.RoleId });
+
             builder.Entity<Post>()
                 .HasOne(e => e.User)
                 .WithMany(c => c.Posts)
@@ -34,6 +35,8 @@ namespace GamerForumWeb.Db.Data
             builder.ApplyConfiguration(new PostConfiguration());
             builder.ApplyConfiguration(new PostComentConfiguration());
             builder.ApplyConfiguration(new UserGamesConfiguration());
+            builder.ApplyConfiguration(new RoleConfiguration());
+            builder.ApplyConfiguration(new UserRoleConfiguration());
 
             builder.Entity<User>().Property(u => u.UserName).HasMaxLength(20).IsRequired();
 

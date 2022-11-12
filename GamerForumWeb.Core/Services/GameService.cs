@@ -3,6 +3,7 @@ using GamerForumWeb.Core.Models.Game;
 using GamerForumWeb.Db.Data;
 using GamerForumWeb.Db.Data.Entities;
 using GamerForumWeb.Db.Repository;
+using Ganss.Xss;
 using Microsoft.EntityFrameworkCore;
 
 namespace GamerForumWeb.Core.Services
@@ -20,15 +21,16 @@ namespace GamerForumWeb.Core.Services
 
         public async Task AddNewGame(GameModel model)
         {
+            var sanitizor = new HtmlSanitizer();
             var game = new Game()
             {
-                Title = model.Title,
-                Studio = model.Studio,
-                Description = model.Description,
+                Title = sanitizor.Sanitize(model.Title),
+                Studio = sanitizor.Sanitize(model.Studio),
+                Description = sanitizor.Sanitize(model.Description),
                 Rating = model.Rating,
                 CreatedDate = DateTime.Now,
                 CategoryId = model.CategoryId,
-                ImageUrl = model.ImageUrl,
+                ImageUrl = sanitizor.Sanitize(model.ImageUrl),
             };
             await repo.AddAsync(game);
             await repo.SaveChangesAsync();
