@@ -140,7 +140,7 @@ namespace GamerForumWeb.Core.Services
         public async Task<IEnumerable<GamesQueryModel>> GetTopGames()
         {
             return await repo.AllReadonly<Game>()
-                .OrderBy(g => g.Rating)
+                .OrderByDescending(g => g.Rating)
                 .Select(g => new GamesQueryModel()
                 {
                     Id = g.Id,

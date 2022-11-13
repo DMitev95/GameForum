@@ -15,7 +15,7 @@
                 <h5 class="card-title mt-1">@category.Name</h5>
             </div>
           
-            <a asp-controller="Game" asp-action="GetByCategory" asp-route-categoryId="@category.Id" class="btn btn-outline-success">Games in @category.Name</a>
+            <a asp-area="Users" asp-controller="UserGame" asp-action="GetByCategory" asp-route-categoryId="@category.Id" class="btn btn-outline-success">Games in @category.Name</a>
             <br/>
         </div>
     }
