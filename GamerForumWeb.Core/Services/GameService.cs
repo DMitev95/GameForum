@@ -38,7 +38,7 @@ namespace GamerForumWeb.Core.Services
 
         public async Task<IEnumerable<GamesQueryModel>> AllGames()
         {
-            return await repo.AllReadonly<Game>().Select(g => new GamesQueryModel()
+            return await repo.AllReadonly<Game>().OrderByDescending(g=>g.Rating).ThenByDescending(g=>g.Title).Select(g => new GamesQueryModel()
             {
                 Id = g.Id,
                 ImageUrl = g.ImageUrl,
@@ -53,6 +53,29 @@ namespace GamerForumWeb.Core.Services
 
         public async Task DeleteGame(int id)
         {
+            var game = await context.Games.Where(g => g.Id == id)
+              .Include(p => p.Posts)
+              .ThenInclude(c => c.Comments)
+              .ThenInclude(v=>v.Votes)
+              .FirstOrDefaultAsync();
+            if (game == null)
+            {
+                throw new ArgumentException("Invalid post!");
+            }
+            foreach (var post in game.Posts)
+            {
+                foreach (var comment in post.Comments)
+                {
+                    foreach (var vote in comment.Votes)
+                    {
+                        await repo.DeleteAsync<Vote>(vote.Id);
+
+                    }
+                    await repo.DeleteAsync<PostComment>(comment.Id);
+                }
+                await repo.DeleteAsync<Post>(post.Id);
+            }
+            await repo.SaveChangesAsync();
             await repo.DeleteAsync<Game>(id);
             await repo.SaveChangesAsync();
         }

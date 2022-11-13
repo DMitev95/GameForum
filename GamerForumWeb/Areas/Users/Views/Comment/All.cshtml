@@ -1,4 +1,5 @@
-﻿@model PostQueryModel
+﻿@using GamerForumWeb.Extensions
+@model PostQueryModel
 
 @{
     ViewBag.Title = "All Comments";
@@ -50,7 +51,7 @@
                                                     <div>
                                                         <div class="d-flex justify-content-between align-items-center">
                                                             <p class="mb-1">
-                                                                @comment.User.UserName <span class="small">@comment.CreatedDate</span>
+                                                                @comment.UserId <span class="small">@comment.CreatedDate</span>
                                                             </p>
                                                         </div>
                                                         <p class="small mb-0">
@@ -58,8 +59,11 @@
                                                         </p>
 
                                                         <br />
-                                                        <a asp-controller="Comment" asp-action="Edit" asp-route-commentId="@comment.Id" class="btn btn-outline-warning btn-sm">Edit Comment</a>
-                                                        <a asp-controller="Comment" asp-action="Delete" asp-route-commentId="@comment.Id" class="btn btn-outline-danger btn-sm">Delete</a>
+                                                        @if (User.Id() == comment.UserId)
+                                                        {
+                                                            <a asp-controller="Comment" asp-action="Edit" asp-route-commentId="@comment.Id" class="btn btn-outline-warning btn-sm">Edit Comment</a>
+                                                            <a asp-controller="Comment" asp-action="Delete" asp-route-commentId="@comment.Id" class="btn btn-outline-danger btn-sm">Delete</a>
+                                                        }
                                                     </div>
                                                 </div>
                                                 <div class="d-flex justify-content-between align-items-center gap-1">

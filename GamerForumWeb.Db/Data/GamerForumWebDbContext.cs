@@ -27,14 +27,17 @@ namespace GamerForumWeb.Db.Data
                 .WithMany(c => c.Posts)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.Entity<Vote>()
-                .HasOne(v => v.Comment)
-                .WithMany(c => c.Votes)
+            builder.Entity<PostComment>()
+                .HasMany(pc => pc.Votes)
+                .WithOne(c => c.Comment)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.Entity<User>()
-                .HasMany(u => u.Posts)
-                .WithOne(p => p.User);
+            //builder.Entity<PostComment>()
+            //    .HasOne(u => u.User)
+            //    .WithMany(c => c.Comments);
+
+
+
 
             builder.ApplyConfiguration(new CategoryConfiguration());
             builder.ApplyConfiguration(new GameConfiguration());

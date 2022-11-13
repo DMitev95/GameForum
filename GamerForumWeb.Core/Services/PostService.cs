@@ -22,7 +22,7 @@ namespace GamerForumWeb.Core.Services
         public async Task AddPost(PostModel model, string userId)
         {
             var sanitizor = new HtmlSanitizer();
-            var game = await dbContext.Games.FirstOrDefaultAsync(g=>g.Id == model.GameId);
+            var game = await dbContext.Games.FirstOrDefaultAsync(g => g.Id == model.GameId);
             if (game == null) throw new ArgumentException("Invalid game!");
 
             var user = await dbContext.Users.Where(u => u.Id == userId).Include(u => u.Posts).FirstOrDefaultAsync();
@@ -45,11 +45,25 @@ namespace GamerForumWeb.Core.Services
 
         public async Task<int> DeletePost(int postId)
         {
-            var post = await repo.GetByIdAsync<Post>(postId);
+            var post = await dbContext.Posts.Where(p => p.Id == postId)
+               .Include(pc => pc.Comments)
+               .ThenInclude(v => v.Votes)
+               .FirstOrDefaultAsync();
             if (post == null)
             {
                 throw new ArgumentException("Invalid post!");
-            }            
+            }
+            foreach (var comment in post.Comments)
+            {
+                foreach (var vote in comment.Votes)
+                {
+                    await repo.DeleteAsync<Vote>(vote.Id);
+                    
+                }
+                await repo.SaveChangesAsync();
+                await repo.DeleteAsync<PostComment>(comment.Id);
+            }
+            await repo.SaveChangesAsync();
             await repo.DeleteAsync<Post>(postId);
             await repo.SaveChangesAsync();
 
@@ -58,13 +72,14 @@ namespace GamerForumWeb.Core.Services
 
         public async Task<IEnumerable<PostQueryModel>> GetAllGamePost(int gameId)
         {
-            return await repo.AllReadonly<Post>().Where(p=>p.GameId == gameId).Select(p => new PostQueryModel()
+            return await repo.AllReadonly<Post>().Where(p => p.GameId == gameId).Select(p => new PostQueryModel()
             {
                 PostId = p.Id,
                 Title = p.Title,
                 Content = p.Content,
                 CreatedOn = p.CreatedDate,
                 GameId = gameId,
+                UserId = p.UserId,
                 Username = p.User.UserName
             }).ToListAsync();
         }

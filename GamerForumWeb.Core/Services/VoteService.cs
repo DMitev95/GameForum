@@ -22,13 +22,13 @@ namespace GamerForumWeb.Core.Services
         public int GetVotes(int commentId)
         {
             var votes = repo.All<Vote>()
-                .Where(v => v.PostCommentId == commentId).Sum(x => (int)x.Type);
+                .Where(v => v.Comment.Id == commentId).Sum(x => (int)x.Type);
             return votes;
         }
 
         public async Task<int> VoteAsync(int commentId, string userId, bool isUpVote)
         {
-            var vote = repo.All<Vote>().FirstOrDefault(v => v.PostCommentId == commentId && v.UserId == userId);
+            var vote = repo.All<Vote>().FirstOrDefault(v => v.Comment.Id == commentId && v.UserId == userId);
             var comment = await repo.GetByIdAsync<PostComment>(commentId);
             if (vote != null)
             {
@@ -38,7 +38,7 @@ namespace GamerForumWeb.Core.Services
             {
                 vote = new Vote
                 {
-                    PostCommentId = commentId,
+                    Comment = comment,
                     UserId = userId,
                     Type = isUpVote ? VoteType.Up : VoteType.Down,
                 };
