@@ -24,13 +24,15 @@ namespace GamerForumWeb.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<User> _emailStore;
         private readonly ILogger<User> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly RoleManager<Role> _roleManager;
 
         public RegisterModel(
             UserManager<User> userManager,
             IUserStore<User> userStore,
             SignInManager<User> signInManager,
             ILogger<User> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            RoleManager<Role> roleManager)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -38,6 +40,7 @@ namespace GamerForumWeb.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _roleManager = roleManager;
         }
 
         /// <summary>
@@ -142,6 +145,11 @@ namespace GamerForumWeb.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
+                    var defaultrole = _roleManager.FindByNameAsync("User").Result;
+                    if (defaultrole != null)
+                    {
+                        await _userManager.AddToRoleAsync(user, defaultrole.Name);
+                    }
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);

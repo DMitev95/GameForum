@@ -7,7 +7,7 @@ using GamerForumWeb.Models;
 namespace GamerForumWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class GameController : Controller
     {
         private readonly IGameService gameService;

@@ -21,7 +21,7 @@ builder.Services.AddDefaultIdentity<User>(options =>
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequireDigit = false;
     options.Password.RequireLowercase = false;
-}).AddEntityFrameworkStores<GamerForumWebDbContext>();
+}).AddRoles<Role>().AddEntityFrameworkStores<GamerForumWebDbContext>();
 
 
 builder.Services.AddRazorPages();

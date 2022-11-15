@@ -28,17 +28,20 @@
                                     Select Action
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li class="dropdown-item">
+                                    @if (User.IsInRole("Admin"))
+                                    {
+                                         <li class="dropdown-item">
                                         <a class="nav-link text-dark" asp-area="Admin" asp-controller="Game" asp-action="All">All Games</a>
                                     </li>
                                     <li class="dropdown-item">
                                         <a class="nav-link text-dark" asp-area="Admin" asp-controller="Game" asp-action="Add">Add Game</a>
                                     </li>
+                                    }
                                     <li class="dropdown-item">
-                                        <a class="nav-link text-dark" asp-area="Users" asp-controller="UserGame" asp-action="All">Users Games</a>
+                                        <a class="nav-link text-dark" asp-area="Users" asp-controller="UserGame" asp-action="All">Games</a>
                                     </li>
                                     <li class="dropdown-item">
-                                        <a class="nav-link text-dark" asp-area="Users" asp-controller="User" asp-action="MyFavoriteGames">My Favorite Game</a>
+                                        <a class="nav-link text-dark" asp-area="Users" asp-controller="User" asp-action="MyFavoriteGames">My Favorites Game</a>
                                     </li>
                                     <li class="dropdown-item">
                                         <a class="nav-link text-dark" asp-area="Users" asp-controller="Category" asp-action="AllCategories">Categories</a>
