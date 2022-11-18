@@ -1,6 +1,5 @@
 ﻿using GamerForumWeb.Core.Contracts;
 using GamerForumWeb.Core.Models.Game;
-using GamerForumWeb.Db.Data;
 using GamerForumWeb.Db.Data.Entities;
 using GamerForumWeb.Db.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -10,21 +9,20 @@ namespace GamerForumWeb.Core.Services
     public class UserService : IUserService
     {
         private readonly IRepository repo;
-        private readonly GamerForumWebDbContext context;
 
-        public UserService(IRepository _repo, GamerForumWebDbContext _context)
+        public UserService(IRepository _repo)
         {
             repo = _repo;
-            context = _context;
         }
 
         public async Task<IEnumerable<GamesQueryModel>> GetUserFavoriteGamesAsync(string userId)
         {
-            var user = await context.Users.Where(u => u.Id == userId)
+            var user = await repo.All<User>().Where(u => u.Id == userId)
                 .Include(u => u.Games)
                 .ThenInclude(ug => ug.Game)
                 .ThenInclude(g => g.Category)
                 .FirstOrDefaultAsync();
+
             if (user == null)
             {
                 throw new ArgumentException("User dont exist!");
@@ -44,7 +42,7 @@ namespace GamerForumWeb.Core.Services
 
         public async Task AddGameToUserCollectionAsync(int gameId, string userId)
         {
-            var user = await context.Users.Where(u => u.Id == userId).Include(u => u.Games).FirstOrDefaultAsync();
+            var user = await repo.All<User>(u => u.Id == userId, u => u.Games).FirstOrDefaultAsync();
             if (user == null)
             {
                 throw new ArgumentException("Invalid User ID");
@@ -65,7 +63,7 @@ namespace GamerForumWeb.Core.Services
                     Game = game,
                     User = user
                 });
-                await context.SaveChangesAsync();
+                await repo.SaveChangesAsync();
             }
             else
             {
@@ -75,7 +73,7 @@ namespace GamerForumWeb.Core.Services
 
         public async Task RemoveGameFromUserCollectionAsync(int gameId, string userId)
         {
-            var user = await context.Users.Where(u => u.Id == userId).Include(u => u.Games).FirstOrDefaultAsync();
+            var user = await repo.All<User>(u => u.Id == userId, u => u.Games).FirstOrDefaultAsync();
 
             if (user == null)
             {
@@ -89,7 +87,7 @@ namespace GamerForumWeb.Core.Services
                 throw new ArgumentException("Invalid game Id");
             }
             user.Games.Remove(game);
-            await context.SaveChangesAsync();
+            await repo.SaveChangesAsync();
         }
     }
 }

@@ -1,18 +1,12 @@
 ﻿using GamerForumWeb.Core.Contracts;
 using GamerForumWeb.Db.Data.Entities;
 using GamerForumWeb.Db.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GamerForumWeb.Core.Services
 {
     public class VoteService : IVoteService
     {
         private readonly IRepository repo;
-
 
         public VoteService(IRepository _repo)
         {

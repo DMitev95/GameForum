@@ -1,7 +1,6 @@
 ﻿using GamerForumWeb.Core.Contracts;
 using GamerForumWeb.Core.Models.Comment;
 using GamerForumWeb.Core.Models.Post;
-using GamerForumWeb.Db.Data;
 using GamerForumWeb.Db.Data.Entities;
 using GamerForumWeb.Db.Repository;
 using Ganss.Xss;
@@ -12,25 +11,24 @@ namespace GamerForumWeb.Core.Services
     public class CommentService : ICommentService
     {
         private readonly IRepository repo;
-        private readonly GamerForumWebDbContext context;
 
-        public CommentService(IRepository _repo, GamerForumWebDbContext _context)
+        public CommentService(IRepository _repo)
         {
             this.repo = _repo;
-            this.context = _context;
         }
 
         public async Task AddComment(CommentModel model, string userId)
         {
             var sanitizor = new HtmlSanitizer();
-            var post = await context.Posts.FirstOrDefaultAsync(g => g.Id == model.PostId);
+
+            var post = await repo.GetByIdAsync<Post>(model.PostId);
 
             if (post == null)
             {
                 throw new ArgumentException("Invalid post!");
             }
 
-            var user = await context.Users.Where(u => u.Id == userId).Include(u => u.Posts).FirstOrDefaultAsync();
+            var user = await repo.GetByIdAsync<User>(userId);
 
             if (user == null)
             {
@@ -52,16 +50,18 @@ namespace GamerForumWeb.Core.Services
         }
 
         public async Task<PostQueryModel> AllComments(int postId)
-        {           
-            var p = await context.Posts.Where(p => p.Id == postId)
+        {
+            var p = await repo.All<Post>().Where(p => p.Id == postId)
                .Include(pc => pc.Comments)
                .ThenInclude(v => v.Votes)
-               .FirstOrDefaultAsync();
+               .FirstOrDefaultAsync();           
+
             if (p == null)
             {
                 throw new ArgumentException("Invalid post!");
             }
-            var user = await context.Users.FirstOrDefaultAsync(u => u.Id == p.UserId);
+            var user = await repo.GetByIdAsync<User>(p.UserId);
+
             var allComents = new PostQueryModel()
             {
                 PostId = p.Id,
@@ -82,7 +82,8 @@ namespace GamerForumWeb.Core.Services
             {
                 throw new ArgumentException("Invalid comment!");
             }
-            var vote = await context.Votes.Where(v => v.Comment.Id == commentId).ToListAsync();
+
+            var vote = await repo.All<Vote>(v=>v.Comment.Id == commentId).ToListAsync();
             if (vote != null)
             {
                 foreach (var item in vote)

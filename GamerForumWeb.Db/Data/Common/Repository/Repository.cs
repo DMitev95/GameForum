@@ -65,6 +65,11 @@ namespace GamerForumWeb.Db.Repository
             return DbSet<T>().Where(search);
         }
 
+        public IQueryable<T> All<T>(Expression<Func<T, bool>> search, Expression<Func<T, object>> includeProperties) where T : class
+        {
+            return DbSet<T>().Where(search).Include(includeProperties);
+        }
+
         /// <summary>
         /// The result collection won't be tracked by the context
         /// </summary>

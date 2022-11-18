@@ -1,6 +1,5 @@
 ﻿using GamerForumWeb.Core.Contracts;
 using GamerForumWeb.Core.Models.Game;
-using GamerForumWeb.Db.Data;
 using GamerForumWeb.Db.Data.Entities;
 using GamerForumWeb.Db.Repository;
 using Ganss.Xss;
@@ -11,12 +10,10 @@ namespace GamerForumWeb.Core.Services
     public class GameService : IGameService
     {
         private readonly IRepository repo;
-        private readonly GamerForumWebDbContext context;
 
-        public GameService(IRepository _repo, GamerForumWebDbContext _context)
+        public GameService(IRepository _repo)
         {
             repo = _repo;
-            context = _context;
         }
 
         public async Task AddNewGame(GameModel model)
@@ -53,7 +50,7 @@ namespace GamerForumWeb.Core.Services
 
         public async Task DeleteGame(int id)
         {
-            var game = await context.Games.Where(g => g.Id == id)
+            var game = await repo.All<Game>().Where(g => g.Id == id)
               .Include(p => p.Posts)
               .ThenInclude(c => c.Comments)
               .ThenInclude(v=>v.Votes)
@@ -82,8 +79,9 @@ namespace GamerForumWeb.Core.Services
 
         public async Task<GamesQueryModel> FindeGameByName(string gameName)
         {
-            var game =  await context.Games.FirstOrDefaultAsync(g => g.Title == gameName);
-            var category = await context.Categories.FirstOrDefaultAsync(c => c.Id == game.CategoryId);
+            var game = await repo.All<Game>(g => g.Title == gameName).FirstOrDefaultAsync();
+
+            var category = await repo.GetByIdAsync<Category>(game.CategoryId);
 
             return new GamesQueryModel()
             {
@@ -100,12 +98,13 @@ namespace GamerForumWeb.Core.Services
 
         public async Task<IEnumerable<Category>> GetCategories()
         {
-            return await context.Categories.ToListAsync();
+            return await repo.All<Category>().ToListAsync();
         }
 
         public async Task<GameModel> GetGameModelById(int gameId)
         {
             var game =  await repo.GetByIdAsync<Game>(gameId);
+
             if (game == null)
             {
                 throw new ArgumentException("Invalid game Id!");
@@ -119,13 +118,13 @@ namespace GamerForumWeb.Core.Services
                 Rating = game.Rating,
                 CategoryId = game.CategoryId,
                 ImageUrl = game.ImageUrl,
-                Categories = context.Categories.ToList(),
+                Categories = repo.All<Category>(),
             };
         }
 
         public async Task<IEnumerable<GamesQueryModel>> GetGamesByCategory(int categoryId)
         {
-            return await context.Games.Where(g => g.CategoryId == categoryId).Select(g => new GamesQueryModel()
+            return await repo.All<Game>(g => g.CategoryId == categoryId).Select(g => new GamesQueryModel()
             {
                 Id = g.Id,
                 Title = g.Title,

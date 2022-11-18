@@ -1,6 +1,5 @@
 ﻿using GamerForumWeb.Core.Contracts;
 using GamerForumWeb.Core.Models.Post;
-using GamerForumWeb.Db.Data;
 using GamerForumWeb.Db.Data.Entities;
 using GamerForumWeb.Db.Repository;
 using Ganss.Xss;
@@ -11,21 +10,20 @@ namespace GamerForumWeb.Core.Services
     public class PostService : IPostService
     {
         private readonly IRepository repo;
-        private readonly GamerForumWebDbContext dbContext;
 
-        public PostService(IRepository _repo, GamerForumWebDbContext _dbContext)
+        public PostService(IRepository _repo)
         {
             repo = _repo;
-            dbContext = _dbContext;
         }
 
         public async Task AddPost(PostModel model, string userId)
         {
             var sanitizor = new HtmlSanitizer();
-            var game = await dbContext.Games.FirstOrDefaultAsync(g => g.Id == model.GameId);
+
+            var game = await repo.GetByIdAsync<Game>(model.GameId);
             if (game == null) throw new ArgumentException("Invalid game!");
 
-            var user = await dbContext.Users.Where(u => u.Id == userId).Include(u => u.Posts).FirstOrDefaultAsync();
+            var user = await repo.All<User>(u => u.Id == userId, u => u.Posts).FirstOrDefaultAsync();
             if (user == null) throw new ArgumentException("Invalid user!");
 
             var post = new Post()
@@ -38,14 +36,14 @@ namespace GamerForumWeb.Core.Services
             };
             game?.Posts.Add(post);
             user?.Posts.Add(post);
-            await dbContext.Posts.AddAsync(post);
-            await dbContext.SaveChangesAsync();
+            await repo.AddAsync(post);
+            await repo.SaveChangesAsync();
 
         }
 
         public async Task<int> DeletePost(int postId)
         {
-            var post = await dbContext.Posts.Where(p => p.Id == postId)
+            var post = await repo.All<Post>().Where(p => p.Id == postId)
                .Include(pc => pc.Comments)
                .ThenInclude(v => v.Votes)
                .FirstOrDefaultAsync();

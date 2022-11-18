@@ -25,7 +25,7 @@
 </p>*@
 
 <div class="alert alert-dismissible alert-warning">
-    <a  class="btn-close" asp-controller="Game" asp-action="All"></a>
+    <a  class="btn-close" asp-area="Users" asp-controller="UserGame" asp-action="All"></a>
     <h4 class="alert-heading">Error!</h4>
     @if (Model.ShowRequestId)
     {

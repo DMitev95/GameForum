@@ -19,6 +19,8 @@ namespace GamerForumWeb.Db.Repository
         /// <returns>Queryable expression tree</returns>
         IQueryable<T> All<T>(Expression<Func<T, bool>> search) where T : class;
 
+        IQueryable<T> All<T>(Expression<Func<T, bool>> search, Expression<Func<T, object>> includeProperties) where T : class;
+
         /// <summary>
         /// The result collection won't be tracked by the context
         /// </summary>
@@ -77,6 +79,7 @@ namespace GamerForumWeb.Db.Repository
         void Delete<T>(T entity) where T : class;
 
         void DeleteRange<T>(IEnumerable<T> entities) where T : class;
+
         void DeleteRange<T>(Expression<Func<T, bool>> deleteWhereClause) where T : class;
 
 
