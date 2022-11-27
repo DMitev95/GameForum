@@ -1,4 +1,6 @@
 ﻿using GamerForumWeb.Core.Models.Game;
+using GamerForumWeb.Core.Models.Users;
+using GamerForumWeb.Db.Data.Entities;
 
 namespace GamerForumWeb.Core.Contracts
 {
@@ -9,5 +11,13 @@ namespace GamerForumWeb.Core.Contracts
         Task AddGameToUserCollectionAsync(int gameId, string userId);
 
         Task RemoveGameFromUserCollectionAsync(int gameId, string userId);
+
+        Task<IEnumerable<UserQueryModel>> GetUsers();
+
+        Task<UserEditModel> GetUserForEdit(string id);
+
+        Task<bool> UpdateUser(UserEditModel model);
+
+        Task<User> GetUserById(string id);
     }
 }

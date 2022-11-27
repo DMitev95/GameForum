@@ -32,9 +32,17 @@ namespace GamerForumWeb.Areas.Admin.Controllers
 
         public async Task<IActionResult> FindeByName(string id)
         {
-            var model = await gameService.FindeGameByName(id);
+            try
+            {
+                var model = await gameService.FindeGameByName(id);
 
-            return View(model);
+                return View(model);
+            }
+            catch (Exception e)
+            {
+                var erroMassage = new ErrorViewModel { RequestId = e.Message };
+                return View("Error", erroMassage);
+            }
         }      
     }
 }

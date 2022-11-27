@@ -1,5 +1,6 @@
 ﻿using GamerForumWeb.Core.Contracts;
 using GamerForumWeb.Core.Models.Game;
+using GamerForumWeb.Core.Models.Users;
 using GamerForumWeb.Db.Data.Entities;
 using GamerForumWeb.Db.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -88,6 +89,52 @@ namespace GamerForumWeb.Core.Services
             }
             user.Games.Remove(game);
             await repo.SaveChangesAsync();
+        }
+        public async Task<User> GetUserById(string id)
+        {
+            return await repo.GetByIdAsync<User>(id);
+        }
+
+        public async Task<UserEditModel> GetUserForEdit(string id)
+        {
+            var user = await repo.GetByIdAsync<User>(id);
+
+            return new UserEditModel()
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName
+            };
+        }
+
+        public async Task<IEnumerable<UserQueryModel>> GetUsers()
+        {
+            return await repo.All<User>()
+                .Select(u => new UserQueryModel()
+                {
+                    Email = u.Email,
+                    Id = u.Id,
+                    FirstName = u.FirstName,
+                    LastName = u.LastName
+                })
+                .ToListAsync();
+        }
+
+        public async Task<bool> UpdateUser(UserEditModel model)
+        {
+            bool result = false;
+            var user = await repo.GetByIdAsync<User>(model.Id);
+
+            if (user != null)
+            {
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+
+                await repo.SaveChangesAsync();
+                result = true;
+            }
+
+            return result;
         }
     }
 }

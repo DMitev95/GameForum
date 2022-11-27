@@ -33,9 +33,6 @@
                                         <li class="dropdown-item">
                                             <a class="nav-link text-dark" asp-area="Admin" asp-controller="Game" asp-action="All">All Games</a>
                                         </li>
-                                        <li class="dropdown-item">
-                                            <a class="nav-link text-dark" asp-area="Admin" asp-controller="Game" asp-action="Add">Add Game</a>
-                                        </li>
                                     }
                                     @if (User.IsAdmin() || User.IsInRole("User"))
                                     {
@@ -51,6 +48,15 @@
                                     }
                                 </ul>
                             </class>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="btn text-dark" asp-area="Admin" asp-controller="Game" asp-action="Add">Add Game</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="btn text-dark" asp-area="Admin" asp-controller="User" asp-action="ManageUsers">Manage Users</a>
+                                </li>
+                            }
                         }
                     </ul>
                     @if (User?.Identity?.IsAuthenticated ?? false)
@@ -63,9 +69,9 @@
                     <partial name="_LoginPartial" />
                 </div>
             </div>
-            <hr/>
+            <hr />
         </nav>
-    </header>   
+    </header>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()

@@ -80,6 +80,10 @@ namespace GamerForumWeb.Core.Services
         public async Task<GamesQueryModel> FindeGameByName(string gameName)
         {
             var game = await repo.All<Game>(g => g.Title == gameName).FirstOrDefaultAsync();
+            if (game == null)
+            {
+                throw new ArgumentException("Invalid game name!");
+            }
 
             var category = await repo.GetByIdAsync<Category>(game.CategoryId);
 
