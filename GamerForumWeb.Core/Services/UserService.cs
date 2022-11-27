@@ -94,6 +94,11 @@ namespace GamerForumWeb.Core.Services
         {
             return await repo.GetByIdAsync<User>(id);
         }
+        public async Task<string> GetUserNameById(string id)
+        {
+            var user =  await repo.GetByIdAsync<User>(id);
+            return user.UserName;
+        }
 
         public async Task<UserEditModel> GetUserForEdit(string id)
         {

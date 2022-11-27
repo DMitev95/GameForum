@@ -19,5 +19,7 @@ namespace GamerForumWeb.Core.Contracts
         Task<bool> UpdateUser(UserEditModel model);
 
         Task<User> GetUserById(string id);
+
+        Task<string> GetUserNameById(string id);
     }
 }
