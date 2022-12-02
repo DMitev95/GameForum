@@ -1,4 +1,6 @@
-﻿using GamerForumWeb.Core.Contracts;
+﻿using AutoMapper.QueryableExtensions;
+using AutoMapper;
+using GamerForumWeb.Core.Contracts;
 using GamerForumWeb.Core.Models.Game;
 using GamerForumWeb.Core.Models.Users;
 using GamerForumWeb.Db.Data.Entities;
@@ -10,10 +12,11 @@ namespace GamerForumWeb.Core.Services
     public class UserService : IUserService
     {
         private readonly IRepository repo;
-
-        public UserService(IRepository _repo)
+        private readonly IMapper mapper;
+        public UserService(IRepository _repo, IMapper _mapper)
         {
             repo = _repo;
+            mapper = _mapper;
         }
 
         public async Task<IEnumerable<GamesQueryModel>> GetUserFavoriteGamesAsync(string userId)
@@ -28,7 +31,7 @@ namespace GamerForumWeb.Core.Services
             {
                 throw new ArgumentException("User dont exist!");
             }
-
+           
             return user.Games.Select(u => new GamesQueryModel()
             {
                 Id = u.GameId,
@@ -37,7 +40,7 @@ namespace GamerForumWeb.Core.Services
                 Description = u.Game.Description,
                 ImageUrl = u.Game.ImageUrl,
                 Rating = u.Game.Rating,
-                Category = u.Game.Category.Name
+                CategoryName = u.Game.Category.Name
             });
         }
 
@@ -104,25 +107,31 @@ namespace GamerForumWeb.Core.Services
         {
             var user = await repo.GetByIdAsync<User>(id);
 
-            return new UserEditModel()
-            {
-                Id = user.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName
-            };
+            var userModel = mapper.Map<UserEditModel>(user);
+            return userModel;
+
+            //return new UserEditModel()
+            //{
+            //    Id = user.Id,
+            //    FirstName = user.FirstName,
+            //    LastName = user.LastName
+            //};
         }
 
         public async Task<IEnumerable<UserQueryModel>> GetUsers()
         {
-            return await repo.All<User>()
-                .Select(u => new UserQueryModel()
-                {
-                    Email = u.Email,
-                    Id = u.Id,
-                    FirstName = u.FirstName,
-                    LastName = u.LastName
-                })
-                .ToListAsync();
+            return await repo.All<User>().ProjectTo<UserQueryModel>(mapper.ConfigurationProvider).ToListAsync();
+
+
+            //return await repo.All<User>()
+            //    .Select(u => new UserQueryModel()
+            //    {
+            //        Email = u.Email,
+            //        Id = u.Id,
+            //        FirstName = u.FirstName,
+            //        LastName = u.LastName
+            //    })
+            //    .ToListAsync();
         }
 
         public async Task<bool> UpdateUser(UserEditModel model)

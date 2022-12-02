@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using GamerForumWeb.Extensions;
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -13,7 +14,7 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">GamerForumWeb</a>
+                <a class="navbar-brand" asp-area="Admin" asp-controller="Home" asp-action="Index">GamerForumWeb</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -24,36 +25,27 @@
                         </li>
                         @if (User?.Identity?.IsAuthenticated ?? false)
                         {
-                            <class class="btn-group">
-                                <button type="button" class="btn dropdown-toggle text-dark" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Select Action
-                                </button>
-                                <ul class="dropdown-menu">
-                                    @if (User.IsAdmin() || User.IsInRole("User"))
-                                    {
-                                        <li class="dropdown-item">
-                                            <a class="nav-link text-dark" asp-area="Users" asp-controller="UserGame" asp-action="All">Games</a>
-                                        </li>
-                                        <li class="dropdown-item">
-                                            <a class="nav-link text-dark" asp-area="Users" asp-controller="User" asp-action="MyFavoriteGames">My Favorites Game</a>
-                                        </li>
-                                        <li class="dropdown-item">
-                                            <a class="nav-link text-dark" asp-area="Users" asp-controller="Category" asp-action="AllCategories">Categories</a>
-                                        </li>
-                                    }
-                                </ul>
-                            </class>
+                            @if (User.IsAdmin() || User.IsInRole("User"))
+                            {
+                                <a asp-area="Admin" asp-controller="Game" asp-action="All" class="btn text-dark">All Games</a>
+                                <a class="btn text-dark" asp-area="Admin" asp-controller="Game" asp-action="Add"><i class="bi bi-plus-circle-dotted"></i> Add Game</a>
+                                 <a class="btn text-dark" asp-area="Admin" asp-controller="User" asp-action="ManageUsers">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-gear" viewBox="0 0 16 16">
+                                        <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm.256 7a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1h5.256Zm3.63-4.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382l.045-.148ZM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0Z" />
+                                    </svg> Manage Users
+                                </a>
+                            }
                         }
                     </ul>
                     @if (User?.Identity?.IsAuthenticated ?? false)
                     {
-                        <form class="d-flex" action="/Users/UserGame/FindeByName" method="get">
+                        <form class="d-flex" action="/Admin/Game/FindeByName" method="get">
                             <input class="form-control" type="text" placeholder="Game search by name" id="id" name="id">
                             <button class="btn" type="submit">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
                                 </svg>
-                            </button>                            
+                            </button>
                         </form>
                     }
                     <partial name="_LoginPartial" />

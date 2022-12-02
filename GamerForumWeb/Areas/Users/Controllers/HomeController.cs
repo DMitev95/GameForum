@@ -17,6 +17,10 @@ namespace GamerForumWeb.Areas.Users.Controllers
 
         public async Task<IActionResult> Index()
         {
+            if (User.IsInRole("Admin"))
+            {
+                return RedirectToAction("Index", "Home", new { area = "Admin" });
+            }
             var model = await gameService.GetTopGames();
 
             return View(model);

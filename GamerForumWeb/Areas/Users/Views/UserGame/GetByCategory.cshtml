@@ -39,7 +39,7 @@
             </div>
             <div class="card-body">
                 <h5 class="card-title">Rating:</h5>
-                <h6 class="card-subtitle text-muted">@game.Category</h6>
+                <h6 class="card-subtitle text-muted">@game.CategoryName</h6>
             </div>
             <div class="card-body">
             </div>
@@ -47,8 +47,6 @@
                 <a asp-controller="User" asp-action="AddToCollection" asp-route-gameId="@game.Id" class="btn btn-outline-success">Add as Favorite</a>
                 <a asp-controller="Post" asp-action="Add" asp-route-gameId="@game.Id" class="btn btn-outline-success">Add Post</a>
                 <a asp-controller="Post" asp-action="All" asp-route-gameId="@game.Id" class="btn btn-outline-info">All Posts</a>
-                <a asp-controller="Game" asp-action="Edit" asp-route-gameId="@game.Id" class="btn btn-outline-warning">Edit Game</a>
-                <a asp-controller="Game" asp-action="Delete" asp-route-gameId="@game.Id" class="btn btn-outline-danger">Delete</a>
             </div>
         </div>
     }

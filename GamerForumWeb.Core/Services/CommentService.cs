@@ -1,9 +1,9 @@
-﻿using GamerForumWeb.Core.Contracts;
+﻿using AutoMapper;
+using GamerForumWeb.Core.Contracts;
 using GamerForumWeb.Core.Models.Comment;
 using GamerForumWeb.Core.Models.Post;
 using GamerForumWeb.Db.Data.Entities;
 using GamerForumWeb.Db.Repository;
-using Ganss.Xss;
 using Microsoft.EntityFrameworkCore;
 
 namespace GamerForumWeb.Core.Services
@@ -11,16 +11,16 @@ namespace GamerForumWeb.Core.Services
     public class CommentService : ICommentService
     {
         private readonly IRepository repo;
+        private readonly IMapper mapper;
 
-        public CommentService(IRepository _repo)
+        public CommentService(IRepository _repo, IMapper _mapper)
         {
             this.repo = _repo;
+            this.mapper = _mapper;
         }
 
         public async Task AddComment(CommentModel model, string userId)
         {
-            var sanitizor = new HtmlSanitizer();
-
             var post = await repo.GetByIdAsync<Post>(model.PostId);
 
             if (post == null)
@@ -35,24 +35,27 @@ namespace GamerForumWeb.Core.Services
                 throw new ArgumentException("Invalid user!");
             }
 
-            var comment = new PostComment()
-            {
-                Content = sanitizor.Sanitize(model.Content),
-                UserId = userId,
-                CreatedDate = DateTime.Now,
-                PostId = model.PostId,
-            };
-
+            var comment = mapper.Map<PostComment>(model);
+            comment.UserId = userId;
+         
             post?.Comments.Add(comment);
             user?.Comments.Add(comment);
             await repo.AddAsync(comment);
             await repo.SaveChangesAsync();
+
+            //var comment = new PostComment()
+            //{
+            //    Content = sanitizor.Sanitize(model.Content),
+            //    UserId = userId,
+            //    CreatedDate = DateTime.Now,
+            //    PostId = model.PostId,
+            //};
         }
 
         public async Task<PostQueryModel> AllComments(int postId)
         {
             var p = await repo.All<Post>().Where(p => p.Id == postId)
-               .Include(pc => pc.Comments)
+               .Include(pc => pc.Comments.Where(x=>x.IsDeleted == false))
                .ThenInclude(v => v.Votes)
                .FirstOrDefaultAsync();
             
@@ -63,16 +66,20 @@ namespace GamerForumWeb.Core.Services
             }
             var user = await repo.GetByIdAsync<User>(p.UserId);
 
-            var allComents = new PostQueryModel()
-            {
-                PostId = p.Id,
-                Title = p.Title,
-                Content = p.Content,
-                UserId = p.UserId,
-                Username = user.UserName,
-                CreatedOn = p.CreatedDate,
-                Comments = p.Comments
-            };
+            var allComents = mapper.Map<PostQueryModel>(p);
+            allComents.PostId = p.Id;
+            allComents.Username = user.UserName;
+
+            //var allComents = new PostQueryModel()
+            //{
+            //    PostId = p.Id,
+            //    Title = p.Title,
+            //    Content = p.Content,
+            //    UserId = p.UserId,
+            //    Username = user.UserName,
+            //    CreatedOn = p.CreatedDate,
+            //    Comments = p.Comments
+            //};
             return allComents;
         }
 
@@ -83,19 +90,21 @@ namespace GamerForumWeb.Core.Services
             {
                 throw new ArgumentException("Invalid comment!");
             }
-
-            var vote = await repo.All<Vote>(v=>v.Comment.Id == commentId).ToListAsync();
-            if (vote != null)
-            {
-                foreach (var item in vote)
-                {
-                    await repo.DeleteAsync<Vote>(item.Id);
-                    
-                }
-                await repo.SaveChangesAsync();
-            }
-            await repo.DeleteAsync<PostComment>(commentId);
+            comment.IsDeleted= true;
+            comment.DeletedOn = DateTime.Now;
+            repo.Update(comment);
             await repo.SaveChangesAsync();
+
+            //var vote = await repo.All<Vote>(v=>v.Comment.Id == commentId).ToListAsync();
+            //if (vote != null)
+            //{
+            //    foreach (var item in vote)
+            //    {
+            //        await repo.DeleteAsync<Vote>(item.Id);
+
+            //    }
+            //    await repo.SaveChangesAsync();
+            //}            
 
             return comment.PostId;
         }
@@ -107,11 +116,8 @@ namespace GamerForumWeb.Core.Services
             {
                 throw new ArgumentException("Invalid comment!");
             }
-
-            return new CommentModel()
-            {
-                Content = comment.Content,
-            };
+             var commentModel = mapper.Map<CommentModel>(comment);
+            return commentModel;
         }
 
         public async Task<int> UpdateComment(int commentId, CommentModel model)

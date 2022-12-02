@@ -14,11 +14,13 @@ namespace GamerForumWeb.Db.Data.Entities
         [StringLength(MaxContentLenght)]
         public string Content { get; set; } = null!;
 
-        public int Likes { get; set; }
-
         public DateTime CreatedDate { get; set; } = DateTime.Now;
 
-        public DateTime UpdatedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
+
+        public bool IsDeleted { get; set; }
+
+        public DateTime? DeletedOn { get; set; }
 
         public int PostId { get; set; }
 

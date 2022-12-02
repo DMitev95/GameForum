@@ -21,7 +21,7 @@ builder.Services.AddDefaultIdentity<User>(options =>
     options.Password.RequireLowercase = false;
 }).AddRoles<Role>().AddEntityFrameworkStores<GamerForumWebDbContext>();
 
-
+builder.Services.AddAutoMapper(typeof(GamerForumWeb.Core.Services.GameService));
 builder.Services.AddRazorPages();
 builder.Services.AddApplicationServices();
 

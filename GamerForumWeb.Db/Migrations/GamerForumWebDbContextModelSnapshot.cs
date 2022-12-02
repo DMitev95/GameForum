@@ -37,7 +37,7 @@ namespace GamerForumWeb.Db.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
 
                     b.HasData(
                         new
@@ -141,7 +141,7 @@ namespace GamerForumWeb.Db.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Games");
+                    b.ToTable("Games", (string)null);
 
                     b.HasData(
                         new
@@ -207,7 +207,7 @@ namespace GamerForumWeb.Db.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Posts");
+                    b.ToTable("Posts", (string)null);
 
                     b.HasData(
                         new
@@ -256,7 +256,7 @@ namespace GamerForumWeb.Db.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("PostsComments");
+                    b.ToTable("PostsComments", (string)null);
 
                     b.HasData(
                         new
@@ -419,7 +419,7 @@ namespace GamerForumWeb.Db.Migrations
 
                     b.HasIndex("GameId");
 
-                    b.ToTable("UserGames");
+                    b.ToTable("UserGames", (string)null);
 
                     b.HasData(
                         new
@@ -453,7 +453,7 @@ namespace GamerForumWeb.Db.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Votes");
+                    b.ToTable("Votes", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
