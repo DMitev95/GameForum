@@ -23,13 +23,6 @@ namespace GamerForumWeb.Core.Services
             return await repo.AllReadonly<Category>()
                 .ProjectTo<CategoryQueryModel>(mapper.ConfigurationProvider)
                 .ToListAsync();
-
-            //return await repo.AllReadonly<Category>().Select(c => new CategoryQueryModel()
-            //{
-            //    Id = c.Id,
-            //    Name = c.Name,
-
-            //}).ToListAsync();
         }
     }
 }

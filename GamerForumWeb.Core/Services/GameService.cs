@@ -27,18 +27,6 @@ namespace GamerForumWeb.Core.Services
 
             await repo.AddAsync(game);
             await repo.SaveChangesAsync();
-
-            //var game = new Game()
-            //{
-            //    Title = sanitizor.Sanitize(model.Title),
-            //    Studio = sanitizor.Sanitize(model.Studio),
-            //    Description = sanitizor.Sanitize(model.Description),
-            //    Rating = model.Rating,
-            //    CreatedDate = DateTime.Now,
-            //    CategoryId = model.CategoryId,
-            //    ImageUrl = sanitizor.Sanitize(model.ImageUrl),
-            //};
-
         }
 
         public async Task<IEnumerable<GamesQueryModel>> AllGames()
@@ -46,18 +34,6 @@ namespace GamerForumWeb.Core.Services
             return await repo.AllReadonly<Game>().Where(g=>g.IsDeleted == false).OrderByDescending(g => g.Rating).ThenByDescending(g => g.Title)
                 .ProjectTo<GamesQueryModel>(mapper.ConfigurationProvider)
                 .ToListAsync();
-
-            //return await repo.AllReadonly<Game>().OrderByDescending(g=>g.Rating).ThenByDescending(g=>g.Title).Select(g => new GamesQueryModel()
-            //{
-            //    Id = g.Id,
-            //    ImageUrl = g.ImageUrl,
-            //    Title = g.Title,
-            //    Description = g.Description,
-            //    Rating = g.Rating,
-            //    Studio = g.Studio,
-            //    Category = g.Category.Name
-
-            //}).ToListAsync();
         }
 
         public async Task DeleteGame(int id)
@@ -72,29 +48,6 @@ namespace GamerForumWeb.Core.Services
             game.DeletedOn = DateTime.Now;
             repo.Update(game);
             await repo.SaveChangesAsync();
-
-            //var game = await repo.All<Game>().Where(g => g.Id == id)
-            //  .Include(p => p.Posts)
-            //  .ThenInclude(c => c.Comments)
-            //  .ThenInclude(v => v.Votes)
-            //  .FirstOrDefaultAsync();
-
-            //foreach (var post in game.Posts)
-            //{
-            //    foreach (var comment in post.Comments)
-            //    {
-            //        foreach (var vote in comment.Votes)
-            //        {
-            //            await repo.DeleteAsync<Vote>(vote.Id);
-
-            //        }
-            //        await repo.DeleteAsync<PostComment>(comment.Id);
-            //    }
-            //    await repo.DeleteAsync<Post>(post.Id);
-            //}
-            //await repo.SaveChangesAsync();
-            //await repo.DeleteAsync<Game>(id);
-
         }
 
         public async Task<GamesQueryModel> FindeGameByName(string gameName)
@@ -109,19 +62,7 @@ namespace GamerForumWeb.Core.Services
             var gameModel = mapper.Map<GamesQueryModel>(game);
             gameModel.CategoryName = category.Name;
 
-            return gameModel;
-
-            //return new GamesQueryModel()
-            //{
-            //    Id = game.Id,
-            //    ImageUrl = game.ImageUrl,
-            //    Title = game.Title,
-            //    Description = game.Description,
-            //    Rating = game.Rating,
-            //    Studio = game.Studio,
-            //    CategoryName = category.Name
-            //};
-           
+            return gameModel;  
         }
 
         public async Task<IEnumerable<Category>> GetCategories()
@@ -142,17 +83,6 @@ namespace GamerForumWeb.Core.Services
             gameModel.Categories = repo.All<Category>();
 
             return gameModel;
-
-            //return new GameModel()
-            //{
-            //    Title = game.Title,
-            //    Description = game.Description,
-            //    Studio = game.Studio,
-            //    Rating = game.Rating,
-            //    CategoryId = game.CategoryId,
-            //    ImageUrl = game.ImageUrl,
-            //    Categories = repo.All<Category>(),
-            //};
         }
 
         public async Task<IEnumerable<GamesQueryModel>> GetGamesByCategory(int categoryId)
@@ -160,17 +90,6 @@ namespace GamerForumWeb.Core.Services
             return await repo.All<Game>(g => g.CategoryId == categoryId && g.IsDeleted == false)
                 .ProjectTo<GamesQueryModel>(mapper.ConfigurationProvider)
                 .ToListAsync();
-
-            //return await repo.All<Game>(g => g.CategoryId == categoryId).Select(g => new GamesQueryModel()
-            //{
-            //    Id = g.Id,
-            //    Title = g.Title,
-            //    Studio = g.Studio,
-            //    Description = g.Description,
-            //    Rating = g.Rating,
-            //    ImageUrl = g.ImageUrl,
-            //    CategoryName = g.Category.Name
-            //}).ToListAsync();
         }
 
         public async Task<IEnumerable<GamesQueryModel>> GetTopGames()
@@ -180,21 +99,6 @@ namespace GamerForumWeb.Core.Services
                 .ProjectTo<GamesQueryModel>(mapper.ConfigurationProvider)
                 .Take(3)
                 .ToListAsync();
-
-            //return await repo.AllReadonly<Game>()
-            //    .OrderByDescending(g => g.Rating)
-            //    .Select(g => new GamesQueryModel()
-            //    {
-            //        Id = g.Id,
-            //        ImageUrl = g.ImageUrl,
-            //        Title = g.Title,
-            //        Description = g.Description,
-            //        Rating = g.Rating,
-            //        Studio = g.Studio,
-            //        CategoryName = g.Category.Name
-            //    })
-            //    .Take(3)
-            //    .ToListAsync();
         }      
 
         public async Task UpdateGame(int gameId, GameModel model)

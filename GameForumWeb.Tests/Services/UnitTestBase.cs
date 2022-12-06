@@ -145,9 +145,9 @@ namespace GameForumWeb.Tests.Services
 
                 DeletedOn = null,
 
-                UserId = this.GuestUserTwo.Id,
+                UserId = this.GuestUser.Id,
 
-                GameId = 1,
+                GameId = this.GameOne.Id,
 
             };
             this.PostTwo = new Post
@@ -165,9 +165,9 @@ namespace GameForumWeb.Tests.Services
 
                 DeletedOn = null,
 
-                UserId = this.GuestUser.Id,
+                UserId = this.GuestUserTwo.Id,
 
-                GameId = 2,
+                GameId = this.GameTwo.Id,
 
             };
             this.dbContext.AddRange(this.PostOne, this.PostTwo);

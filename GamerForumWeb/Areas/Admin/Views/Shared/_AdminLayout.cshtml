@@ -25,7 +25,7 @@
                         </li>
                         @if (User?.Identity?.IsAuthenticated ?? false)
                         {
-                            @if (User.IsAdmin() || User.IsInRole("User"))
+                            @if (User.IsAdmin())
                             {
                                 <a asp-area="Admin" asp-controller="Game" asp-action="All" class="btn text-dark">All Games</a>
                                 <a class="btn text-dark" asp-area="Admin" asp-controller="Game" asp-action="Add"><i class="bi bi-plus-circle-dotted"></i> Add Game</a>

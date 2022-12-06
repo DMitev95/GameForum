@@ -38,21 +38,11 @@ namespace GamerForumWeb.Core.Services
             user?.Posts.Add(post);
             await repo.AddAsync(post);
             await repo.SaveChangesAsync();
-            //var post = new Post()
-            //{
-            //    Title = sanitizor.Sanitize(model.Title),
-            //    Content = sanitizor.Sanitize(model.Content),
-            //    CreatedDate = DateTime.Now,
-            //    UserId = userId,
-            //    GameId = model.GameId
-            //};
-
-
         }
 
         public async Task<int> DeletePost(int postId)
         {
-            var post = await repo.All<Post>().Where(p => p.Id == postId).FirstOrDefaultAsync();
+            var post = await repo.All<Post>().Where(p => p.Id == postId && p.IsDeleted == false).FirstOrDefaultAsync();
             if (post == null)
             {
                 throw new ArgumentException("Invalid post!");
@@ -63,41 +53,11 @@ namespace GamerForumWeb.Core.Services
             await repo.SaveChangesAsync();
 
             return post.GameId;
-
-            //var post = await repo.All<Post>().Where(p => p.Id == postId)
-            //   .Include(pc => pc.Comments)
-            //   .ThenInclude(v => v.Votes)
-            //   .FirstOrDefaultAsync();
-
-            //foreach (var comment in post.Comments)
-            //{
-            //    foreach (var vote in comment.Votes)
-            //    {
-            //        await repo.DeleteAsync<Vote>(vote.Id);
-
-            //    }
-            //    await repo.SaveChangesAsync();
-            //    await repo.DeleteAsync<PostComment>(comment.Id);
-            //}
-            //await repo.SaveChangesAsync();
-            //await repo.DeleteAsync<Post>(postId);
-
         }
 
         public async Task<IEnumerable<PostQueryModel>> GetAllGamePost(int gameId)
         {
             return await repo.AllReadonly<Post>().Where(p => p.GameId == gameId && p.IsDeleted == false).ProjectTo<PostQueryModel>(mapper.ConfigurationProvider).ToListAsync();
-
-            //return await repo.AllReadonly<Post>().Where(p => p.GameId == gameId).Select(p => new PostQueryModel()
-            //{
-            //    PostId = p.Id,
-            //    Title = p.Title,
-            //    Content = p.Content,
-            //    CreatedOn = p.CreatedDate,
-            //    GameId = gameId,
-            //    UserId = p.UserId,
-            //    Username = p.User.UserName
-            //}).ToListAsync();
         }
     }
 }

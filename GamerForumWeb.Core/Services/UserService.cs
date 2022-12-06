@@ -93,10 +93,12 @@ namespace GamerForumWeb.Core.Services
             user.Games.Remove(game);
             await repo.SaveChangesAsync();
         }
+
         public async Task<User> GetUserById(string id)
         {
             return await repo.GetByIdAsync<User>(id);
         }
+
         public async Task<string> GetUserNameById(string id)
         {
             var user =  await repo.GetByIdAsync<User>(id);
@@ -109,29 +111,11 @@ namespace GamerForumWeb.Core.Services
 
             var userModel = mapper.Map<UserEditModel>(user);
             return userModel;
-
-            //return new UserEditModel()
-            //{
-            //    Id = user.Id,
-            //    FirstName = user.FirstName,
-            //    LastName = user.LastName
-            //};
         }
 
         public async Task<IEnumerable<UserQueryModel>> GetUsers()
         {
             return await repo.All<User>().ProjectTo<UserQueryModel>(mapper.ConfigurationProvider).ToListAsync();
-
-
-            //return await repo.All<User>()
-            //    .Select(u => new UserQueryModel()
-            //    {
-            //        Email = u.Email,
-            //        Id = u.Id,
-            //        FirstName = u.FirstName,
-            //        LastName = u.LastName
-            //    })
-            //    .ToListAsync();
         }
 
         public async Task<bool> UpdateUser(UserEditModel model)

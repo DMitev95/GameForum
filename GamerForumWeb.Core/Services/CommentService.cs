@@ -42,14 +42,6 @@ namespace GamerForumWeb.Core.Services
             user?.Comments.Add(comment);
             await repo.AddAsync(comment);
             await repo.SaveChangesAsync();
-
-            //var comment = new PostComment()
-            //{
-            //    Content = sanitizor.Sanitize(model.Content),
-            //    UserId = userId,
-            //    CreatedDate = DateTime.Now,
-            //    PostId = model.PostId,
-            //};
         }
 
         public async Task<PostQueryModel> AllComments(int postId)
@@ -69,17 +61,6 @@ namespace GamerForumWeb.Core.Services
             var allComents = mapper.Map<PostQueryModel>(p);
             allComents.PostId = p.Id;
             allComents.Username = user.UserName;
-
-            //var allComents = new PostQueryModel()
-            //{
-            //    PostId = p.Id,
-            //    Title = p.Title,
-            //    Content = p.Content,
-            //    UserId = p.UserId,
-            //    Username = user.UserName,
-            //    CreatedOn = p.CreatedDate,
-            //    Comments = p.Comments
-            //};
             return allComents;
         }
 
@@ -94,18 +75,6 @@ namespace GamerForumWeb.Core.Services
             comment.DeletedOn = DateTime.Now;
             repo.Update(comment);
             await repo.SaveChangesAsync();
-
-            //var vote = await repo.All<Vote>(v=>v.Comment.Id == commentId).ToListAsync();
-            //if (vote != null)
-            //{
-            //    foreach (var item in vote)
-            //    {
-            //        await repo.DeleteAsync<Vote>(item.Id);
-
-            //    }
-            //    await repo.SaveChangesAsync();
-            //}            
-
             return comment.PostId;
         }
 
