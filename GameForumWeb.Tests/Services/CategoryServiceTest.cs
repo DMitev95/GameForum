@@ -21,9 +21,9 @@ namespace GameForumWeb.Tests.Services
             //Arrange
             var categories = this.dbContext.Categories.Count();
             //Act
-            var result = service.GetAllCategory();
+            var result =  await service.GetAllCategory();
             //Assert
-            Assert.AreEqual(categories, result.Result.Count());
+            Assert.AreEqual(categories, result.Count());
         }
     }
 }

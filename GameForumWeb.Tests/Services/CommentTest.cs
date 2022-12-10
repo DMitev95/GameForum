@@ -31,7 +31,7 @@ namespace GameForumWeb.Tests.Services
             var addComment = service.AddComment(commentModel, commentModel.UserId);
             //Assert
             var count = this.dbContext.PostsComments.Count();
-            Assert.AreEqual(count, comments + 1);
+            Assert.AreEqual(comments + 1, count);
         }
 
         [Test]
