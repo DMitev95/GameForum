@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Reflection.Emit;
 
 namespace GamerForumWeb.Db.Data
 {
@@ -26,11 +27,11 @@ namespace GamerForumWeb.Db.Data
             }
             this.seedDb = seed;
         }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Post> Posts { get; set; }
-        public DbSet<PostComment> PostsComments { get; set; }
-        public DbSet<Vote> Votes { get; set; }
-        public DbSet<Game> Games { get; set; }
+        public DbSet<Category> Categories { get; set; } = null!;
+        public DbSet<Post> Posts { get; set; } = null!;
+        public DbSet<PostComment> PostsComments { get; set; } = null!;
+        public DbSet<Vote> Votes { get; set; } = null!;
+        public DbSet<Game> Games { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -45,7 +46,7 @@ namespace GamerForumWeb.Db.Data
             builder.Entity<PostComment>()
                 .HasMany(pc => pc.Votes)
                 .WithOne(c => c.Comment)
-                .OnDelete(DeleteBehavior.Restrict);          
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<User>().Property(u => u.UserName).HasMaxLength(20).IsRequired();
 
@@ -53,12 +54,14 @@ namespace GamerForumWeb.Db.Data
 
             if (this.seedDb)
             {
+                builder.ApplyConfiguration(new UserConfiguration());
+                builder.ApplyConfiguration(new RoleConfiguration());
+                builder.ApplyConfiguration(new UserRolesConfiguration());
                 builder.ApplyConfiguration(new CategoryConfiguration());
                 builder.ApplyConfiguration(new GameConfiguration());
                 builder.ApplyConfiguration(new PostConfiguration());
                 builder.ApplyConfiguration(new PostComentConfiguration());
-                builder.ApplyConfiguration(new UserGamesConfiguration());
-                builder.ApplyConfiguration(new RoleConfiguration());
+                builder.ApplyConfiguration(new UserGamesConfiguration());            
             }
 
             base.OnModelCreating(builder);

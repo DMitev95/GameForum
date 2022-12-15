@@ -19,12 +19,14 @@ namespace GamerForumWeb.Db.Data.Configuration
                 {
                     Id = "1",
                     Name = "Admin",
+                    NormalizedName = "ADMIN",
                     CreatedOn = DateTime.Now,
                 },
                 new Role()
                 {
                     Id = "2",
                     Name = "User",
+                    NormalizedName = "USER",
                     CreatedOn = DateTime.Now,
                 },
             };

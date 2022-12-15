@@ -19,7 +19,7 @@ namespace GameForumWeb.Tests.Services
         {
             this.dbContext = DatabaseMock.Instance;           
             this.mapper = MapperMock.Instance;
-            this.repo = new RepositoryMock(this.dbContext);
+            this.repo = new Repository(this.dbContext);
             this.SeedDatabase();
         }
 
@@ -184,7 +184,7 @@ namespace GameForumWeb.Tests.Services
 
                 DeletedOn = null,
 
-                PostId = 1,
+                PostId = this.PostOne.Id,
 
                 UserId = this.GuestUserTwo.Id
             };
@@ -200,7 +200,7 @@ namespace GameForumWeb.Tests.Services
 
                 DeletedOn = null,
 
-                PostId = 2,
+                PostId = this.PostTwo.Id,
 
                 UserId = this.GuestUser.Id
             };

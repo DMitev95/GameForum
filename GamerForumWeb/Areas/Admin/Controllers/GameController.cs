@@ -3,6 +3,7 @@ using GamerForumWeb.Core.Models.Game;
 using Microsoft.AspNetCore.Authorization;
 using GamerForumWeb.Core.Contracts;
 using GamerForumWeb.Models;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace GamerForumWeb.Areas.Admin.Controllers
 {

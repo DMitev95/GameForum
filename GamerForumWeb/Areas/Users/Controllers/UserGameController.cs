@@ -3,6 +3,7 @@ using GamerForumWeb.Core.Models.Game;
 using Microsoft.AspNetCore.Authorization;
 using GamerForumWeb.Core.Contracts;
 using GamerForumWeb.Models;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace GamerForumWeb.Areas.Admin.Controllers
 {
@@ -14,7 +15,7 @@ namespace GamerForumWeb.Areas.Admin.Controllers
 
         public UserGameController(IGameService _gameService)
         {
-            gameService = _gameService;
+            this.gameService = _gameService;
         }
 
         public async Task<IActionResult> All()
@@ -43,6 +44,6 @@ namespace GamerForumWeb.Areas.Admin.Controllers
                 var erroMassage = new ErrorViewModel { RequestId = e.Message };
                 return View("Error", erroMassage);
             }
-        }      
+        }
     }
 }

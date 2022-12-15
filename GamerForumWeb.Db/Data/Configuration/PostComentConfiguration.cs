@@ -17,9 +17,9 @@ namespace GamerForumWeb.Db.Data.Configuration
                 new PostComment
                 {
                     Id = 1,
-                    Content = "You suck, go fuck yoursef!!!",
+                    Content = "I need Help please help me!",
                     PostId = 1,
-                    UserId = "06df5d6a-ae43-4a1e-a3ad-0c9f6ddf777c"
+                    UserId = "25a6dc8b-a212-4cd8-9b62-efcdea0c7ab1"
                 }
             };
             return comments;
