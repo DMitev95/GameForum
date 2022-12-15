@@ -20,12 +20,14 @@ namespace GamerForumWeb.Db.Data.Configuration
             var user = new User()
             {
                 Id = "25a6dc8b-a212-4cd8-9b62-efcdea0c7ab1",
-                UserName = "Admin",
+                UserName = "admin",
+                NormalizedUserName = "ADMIN",
                 Email = "admin@gmail.bg",
+                NormalizedEmail = "ADMIN@GMAIL.COM",
+                PasswordHash = hasher.HashPassword(null, "1234567890"),
                 FirstName = "Admin",
                 LastName = "Admin",                
             };
-            user.PasswordHash = hasher.HashPassword(user, "Admin1234");
             return user;
         }
     }

@@ -27,7 +27,7 @@ namespace GameForumWeb.Tests.Services
             var user = this.dbContext.Users.Where(u => u.Id == this.GuestUser.Id).FirstOrDefault();
 
             //Act
-            var result = this.service.GetUserById(this.GuestUser.Id).Result;
+            var result = await this.service.GetUserById(this.GuestUser.Id);
 
             //Assert
             Assert.AreEqual(user.UserName, result.UserName);
@@ -40,7 +40,7 @@ namespace GameForumWeb.Tests.Services
             var user = this.dbContext.Users.Where(u => u.Id == this.GuestUser.Id).FirstOrDefault();
 
             //Act
-            var result = this.service.GetUserNameById(this.GuestUser.Id).Result;
+            var result = await this.service.GetUserNameById(this.GuestUser.Id);
 
             //Assert
             Assert.AreEqual(user.UserName, result);
@@ -53,7 +53,7 @@ namespace GameForumWeb.Tests.Services
             var user = this.dbContext.Users.Where(u => u.Id == this.GuestUser.Id).FirstOrDefault();
 
             //Act
-            var result = this.service.GetUserForEdit(this.GuestUser.Id).Result;
+            var result = await this.service.GetUserForEdit(this.GuestUser.Id);
 
             //Assert
             Assert.AreEqual(user.FirstName, result.FirstName);
@@ -66,7 +66,7 @@ namespace GameForumWeb.Tests.Services
             var users = this.dbContext.Users.Count();
 
             //Act
-            var result = this.service.GetUsers().Result;
+            var result = await this.service.GetUsers();
 
             //Assert
             Assert.AreEqual(users, result.Count());
@@ -84,7 +84,7 @@ namespace GameForumWeb.Tests.Services
             };
 
             //Act
-            var result = this.service.UpdateUser(model).Result;
+            var result = await this.service.UpdateUser(model);
 
             //Assert
             Assert.AreEqual(true, result);
@@ -102,7 +102,7 @@ namespace GameForumWeb.Tests.Services
             };
 
             //Act
-            var result = this.service.UpdateUser(model).Result;
+            var result = await this.service.UpdateUser(model);
 
             //Assert
             Assert.AreEqual(false, result);

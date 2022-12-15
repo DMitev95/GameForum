@@ -4,6 +4,7 @@ using GamerForumWeb.Core.Models.Comment;
 using GamerForumWeb.Core.Models.Post;
 using GamerForumWeb.Db.Data.Entities;
 using GamerForumWeb.Db.Repository;
+using Ganss.Xss;
 using Microsoft.EntityFrameworkCore;
 
 namespace GamerForumWeb.Core.Services
@@ -21,6 +22,7 @@ namespace GamerForumWeb.Core.Services
 
         public async Task AddComment(CommentModel model, string userId)
         {
+            var sanitizor = new HtmlSanitizer();
             var post = await repo.GetByIdAsync<Post>(model.PostId);
 
             if (post == null)
@@ -37,6 +39,7 @@ namespace GamerForumWeb.Core.Services
 
             var comment = mapper.Map<PostComment>(model);
             comment.UserId = userId;
+            comment.Content = sanitizor.Sanitize(comment.Content);
          
             post?.Comments.Add(comment);
             user?.Comments.Add(comment);
@@ -91,12 +94,13 @@ namespace GamerForumWeb.Core.Services
 
         public async Task<int> UpdateComment(int commentId, CommentModel model)
         {
+            var sanitizor = new HtmlSanitizer();
             var comment = await repo.GetByIdAsync<PostComment>(commentId);
             if (comment == null)
             {
                 throw new ArgumentException("Invalid comment!");
             }
-            comment.Content = model.Content;
+            comment.Content = sanitizor.Sanitize(model.Content);
             comment.UpdatedDate = DateTime.Now;
 
             repo.Update(comment);

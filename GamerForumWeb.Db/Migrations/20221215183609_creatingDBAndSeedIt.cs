@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GamerForumWeb.Db.Migrations
 {
-    public partial class CreatingDbAGAIN : Migration
+    public partial class creatingDBAndSeedIt : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,6 +14,8 @@ namespace GamerForumWeb.Db.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -210,6 +212,8 @@ namespace GamerForumWeb.Db.Migrations
                     Content = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     GameId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -261,9 +265,10 @@ namespace GamerForumWeb.Db.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Content = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
-                    Likes = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     PostId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -290,7 +295,7 @@ namespace GamerForumWeb.Db.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PostCommentId = table.Column<int>(type: "int", nullable: false),
+                    CommentId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false)
                 },
@@ -304,8 +309,8 @@ namespace GamerForumWeb.Db.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Votes_PostsComments_PostCommentId",
-                        column: x => x.PostCommentId,
+                        name: "FK_Votes_PostsComments_CommentId",
+                        column: x => x.CommentId,
                         principalTable: "PostsComments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -381,9 +386,9 @@ namespace GamerForumWeb.Db.Migrations
                 column: "GameId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Votes_PostCommentId",
+                name: "IX_Votes_CommentId",
                 table: "Votes",
-                column: "PostCommentId");
+                column: "CommentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Votes_UserId",

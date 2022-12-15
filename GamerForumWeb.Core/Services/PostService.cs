@@ -33,6 +33,8 @@ namespace GamerForumWeb.Core.Services
             var post = mapper.Map<Post>(model);
             post.UserId = userId;
             post.CreatedDate = DateTime.Now;
+            post.Title = sanitizor.Sanitize(post.Title);
+            post.Content = sanitizor.Sanitize(post.Content);
 
             game?.Posts.Add(post);
             user?.Posts.Add(post);

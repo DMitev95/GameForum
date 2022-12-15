@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GamerForumWeb.Db.Migrations
 {
     [DbContext(typeof(GamerForumWebDbContext))]
-    [Migration("20221210163410_Test")]
-    partial class Test
+    [Migration("20221215183609_creatingDBAndSeedIt")]
+    partial class creatingDBAndSeedIt
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -40,58 +40,6 @@ namespace GamerForumWeb.Db.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Sandbox"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Real-time strategy (RTS)"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Real-time strategy (RTS)"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Multiplayer online battle arena (MOBA)"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Role-playing (RPG, ARPG, and More)"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Simulation and sports"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "Puzzlers and party games"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Name = "Action-adventure"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Name = "Survival and horror"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Name = "Platformer"
-                        });
                 });
 
             modelBuilder.Entity("GamerForumWeb.Db.Data.Entities.Game", b =>
@@ -144,32 +92,6 @@ namespace GamerForumWeb.Db.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Games");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CategoryId = 5,
-                            CreatedDate = new DateTime(2022, 12, 10, 18, 34, 10, 24, DateTimeKind.Local).AddTicks(5843),
-                            Description = "Dog shit game!!!",
-                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/6/65/World_of_Warcraft.png",
-                            IsDeleted = false,
-                            Rating = 6m,
-                            Studio = "Blizzrd",
-                            Title = "World of Warcraft"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CategoryId = 1,
-                            CreatedDate = new DateTime(2022, 12, 10, 18, 34, 10, 26, DateTimeKind.Local).AddTicks(4614),
-                            Description = "Great game",
-                            ImageUrl = "https://www.minecraft.net/content/dam/games/minecraft/key-art/CC-Update-Part-II_600x360.jpg",
-                            IsDeleted = false,
-                            Rating = 10m,
-                            Studio = "Mojang",
-                            Title = "Minecraft"
-                        });
                 });
 
             modelBuilder.Entity("GamerForumWeb.Db.Data.Entities.Post", b =>
@@ -216,18 +138,6 @@ namespace GamerForumWeb.Db.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Posts");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Content = "I am on quest to kill some dogshit frogs and one is missing?!",
-                            CreatedDate = new DateTime(2022, 12, 10, 18, 34, 10, 26, DateTimeKind.Local).AddTicks(7134),
-                            GameId = 1,
-                            IsDeleted = false,
-                            Title = "I got stuck in Northrend! Help me plox!!!",
-                            UserId = "06df5d6a-ae43-4a1e-a3ad-0c9f6ddf777c"
-                        });
                 });
 
             modelBuilder.Entity("GamerForumWeb.Db.Data.Entities.PostComment", b =>
@@ -269,17 +179,6 @@ namespace GamerForumWeb.Db.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("PostsComments");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Content = "You suck, go fuck yoursef!!!",
-                            CreatedDate = new DateTime(2022, 12, 10, 18, 34, 10, 27, DateTimeKind.Local).AddTicks(280),
-                            IsDeleted = false,
-                            PostId = 1,
-                            UserId = "06df5d6a-ae43-4a1e-a3ad-0c9f6ddf777c"
-                        });
                 });
 
             modelBuilder.Entity("GamerForumWeb.Db.Data.Entities.Role", b =>
@@ -313,22 +212,6 @@ namespace GamerForumWeb.Db.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "1",
-                            ConcurrencyStamp = "2c535183-b07e-42f3-9f59-682ab896e89d",
-                            CreatedOn = new DateTime(2022, 12, 10, 18, 34, 10, 27, DateTimeKind.Local).AddTicks(5621),
-                            Name = "Admin"
-                        },
-                        new
-                        {
-                            Id = "2",
-                            ConcurrencyStamp = "138e0f23-25e7-418f-8ad8-1f3318ce637a",
-                            CreatedOn = new DateTime(2022, 12, 10, 18, 34, 10, 27, DateTimeKind.Local).AddTicks(5909),
-                            Name = "User"
-                        });
                 });
 
             modelBuilder.Entity("GamerForumWeb.Db.Data.Entities.User", b =>
@@ -431,13 +314,6 @@ namespace GamerForumWeb.Db.Migrations
                     b.HasIndex("GameId");
 
                     b.ToTable("UserGames");
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "06df5d6a-ae43-4a1e-a3ad-0c9f6ddf777c",
-                            GameId = 1
-                        });
                 });
 
             modelBuilder.Entity("GamerForumWeb.Db.Data.Entities.Vote", b =>

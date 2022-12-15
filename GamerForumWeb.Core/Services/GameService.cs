@@ -25,6 +25,11 @@ namespace GamerForumWeb.Core.Services
             var sanitizor = new HtmlSanitizer();
             var game = mapper.Map<Game>(model);
 
+            game.Title = sanitizor.Sanitize(game.Title);
+            game.Studio = sanitizor.Sanitize(game.Studio);
+            game.Description = sanitizor.Sanitize(game.Description);
+            game.ImageUrl = sanitizor.Sanitize(game.ImageUrl);
+
             await repo.AddAsync(game);
             await repo.SaveChangesAsync();
         }
@@ -103,17 +108,18 @@ namespace GamerForumWeb.Core.Services
 
         public async Task UpdateGame(int gameId, GameModel model)
         {
+            var sanitizor = new HtmlSanitizer();
             var game = await repo.GetByIdAsync<Game>(gameId);
             if (game == null)
             {
                 throw new ArgumentException("Invalid game ID");
             }
-            game.Title = model.Title;
-            game.Description = model.Description;
-            game.Studio = model.Studio;
+            game.Title = sanitizor.Sanitize(model.Title);
+            game.Description = sanitizor.Sanitize(model.Description);
+            game.Studio = sanitizor.Sanitize(model.Studio);
             game.Rating = model.Rating;
             game.CategoryId = model.CategoryId; 
-            game.ImageUrl = model.ImageUrl;
+            game.ImageUrl = sanitizor.Sanitize(model.ImageUrl);
             game.ModifiedOn = DateTime.Now;
 
             repo.Update(game);

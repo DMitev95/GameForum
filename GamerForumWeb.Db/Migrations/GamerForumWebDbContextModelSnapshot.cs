@@ -148,25 +148,61 @@ namespace GamerForumWeb.Db.Migrations
                         {
                             Id = 1,
                             CategoryId = 5,
-                            CreatedDate = new DateTime(2022, 12, 10, 18, 34, 10, 24, DateTimeKind.Local).AddTicks(5843),
-                            Description = "Dog shit game!!!",
-                            ImageUrl = "https://upload.wikimedia.org/wikipedia/en/6/65/World_of_Warcraft.png",
+                            CreatedDate = new DateTime(2022, 12, 15, 20, 36, 30, 685, DateTimeKind.Local).AddTicks(1833),
+                            Description = "World of Warcraft: Dragonflight is the ninth expansion pack for the massively multiplayer online role-playing game (MMORPG) World of Warcraft, following Shadowlands. It was announced in April 2022 and released on November 28, 2022.",
+                            ImageUrl = "https://assets-prd.ignimgs.com/2022/04/19/wow-dragonflight-button-1-1650398895381.jpg",
                             IsDeleted = false,
-                            Rating = 6m,
+                            Rating = 10m,
                             Studio = "Blizzrd",
-                            Title = "World of Warcraft"
+                            Title = "World of Warcraft: Dragonflight"
                         },
                         new
                         {
                             Id = 2,
                             CategoryId = 1,
-                            CreatedDate = new DateTime(2022, 12, 10, 18, 34, 10, 26, DateTimeKind.Local).AddTicks(4614),
-                            Description = "Great game",
+                            CreatedDate = new DateTime(2022, 12, 15, 20, 36, 30, 685, DateTimeKind.Local).AddTicks(1995),
+                            Description = "Minecraft is a sandbox video game developed by Mojang Studios. The game was created by Markus \"Notch\" Persson in the Java programming language. Following several early private testing versions, it was first made public in May 2009 before being fully released in November 2011, with Notch stepping down and Jens \"Jeb\" Bergensten taking over development. Minecraft has since been ported to several other platforms and is the best-selling video game of all time, with over 238 million copies sold and nearly 140 million monthly active players as of 2021.",
                             ImageUrl = "https://www.minecraft.net/content/dam/games/minecraft/key-art/CC-Update-Part-II_600x360.jpg",
                             IsDeleted = false,
                             Rating = 10m,
                             Studio = "Mojang",
                             Title = "Minecraft"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CategoryId = 9,
+                            CreatedDate = new DateTime(2022, 12, 15, 20, 36, 30, 685, DateTimeKind.Local).AddTicks(1998),
+                            Description = "Ride and fight into a deadly, post pandemic America. Play as Deacon St. John, a drifter and bounty hunter who rides the broken road, fighting to survive while searching for a reason to live in this open-world action-adventure game.",
+                            ImageUrl = "https://assets1.ignimgs.com/2017/08/11/days-gone---button-2-1502413280476.jpg",
+                            IsDeleted = false,
+                            Rating = 10m,
+                            Studio = "Sony Interactive Entertainment",
+                            Title = "Days Gone "
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CategoryId = 9,
+                            CreatedDate = new DateTime(2022, 12, 15, 20, 36, 30, 685, DateTimeKind.Local).AddTicks(2001),
+                            Description = "Red Barrels invites you to experience mind-numbing terror, this time with friends. Whether you go through the trials alone or in teams, if you survive long enough and complete the therapy, Murkoff will happily let you leave… but will you be the same?",
+                            ImageUrl = "https://static.dir.bg/uploads/images/2021/08/26/2243277/1920x1080.jpg?_=1629985277",
+                            IsDeleted = false,
+                            Rating = 8m,
+                            Studio = "Red Barrels",
+                            Title = "The Outlast Trials"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CategoryId = 9,
+                            CreatedDate = new DateTime(2022, 12, 15, 20, 36, 30, 685, DateTimeKind.Local).AddTicks(2003),
+                            Description = "The virus won and civilization has fallen back to the Dark Ages. The City, one of the last human settlements, is on the brink of collapse. Use your agility and combat skills to survive, and reshape the world. Your choices matter.",
+                            ImageUrl = "https://cdn1.epicgames.com/salesEvent/salesEvent/EGS_DyingLight2StayHuman_Techland_S3_2560x1440-f1dcd15207f091674615ccb4bd9dc3c7",
+                            IsDeleted = false,
+                            Rating = 10m,
+                            Studio = "Techland",
+                            Title = "Dying Light 2 Stay Human"
                         });
                 });
 
@@ -219,12 +255,12 @@ namespace GamerForumWeb.Db.Migrations
                         new
                         {
                             Id = 1,
-                            Content = "I am on quest to kill some dogshit frogs and one is missing?!",
-                            CreatedDate = new DateTime(2022, 12, 10, 18, 34, 10, 26, DateTimeKind.Local).AddTicks(7134),
+                            Content = "I am on quest to kill some frogs and one is missing?!",
+                            CreatedDate = new DateTime(2022, 12, 15, 20, 36, 30, 685, DateTimeKind.Local).AddTicks(3970),
                             GameId = 1,
                             IsDeleted = false,
                             Title = "I got stuck in Northrend! Help me plox!!!",
-                            UserId = "06df5d6a-ae43-4a1e-a3ad-0c9f6ddf777c"
+                            UserId = "25a6dc8b-a212-4cd8-9b62-efcdea0c7ab1"
                         });
                 });
 
@@ -272,11 +308,11 @@ namespace GamerForumWeb.Db.Migrations
                         new
                         {
                             Id = 1,
-                            Content = "You suck, go fuck yoursef!!!",
-                            CreatedDate = new DateTime(2022, 12, 10, 18, 34, 10, 27, DateTimeKind.Local).AddTicks(280),
+                            Content = "I need Help please help me!",
+                            CreatedDate = new DateTime(2022, 12, 15, 20, 36, 30, 685, DateTimeKind.Local).AddTicks(6702),
                             IsDeleted = false,
                             PostId = 1,
-                            UserId = "06df5d6a-ae43-4a1e-a3ad-0c9f6ddf777c"
+                            UserId = "25a6dc8b-a212-4cd8-9b62-efcdea0c7ab1"
                         });
                 });
 
@@ -316,16 +352,18 @@ namespace GamerForumWeb.Db.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "2c535183-b07e-42f3-9f59-682ab896e89d",
-                            CreatedOn = new DateTime(2022, 12, 10, 18, 34, 10, 27, DateTimeKind.Local).AddTicks(5621),
-                            Name = "Admin"
+                            ConcurrencyStamp = "48bd96bb-2788-4c76-b00b-0b923d692a48",
+                            CreatedOn = new DateTime(2022, 12, 15, 20, 36, 30, 684, DateTimeKind.Local).AddTicks(1104),
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "138e0f23-25e7-418f-8ad8-1f3318ce637a",
-                            CreatedOn = new DateTime(2022, 12, 10, 18, 34, 10, 27, DateTimeKind.Local).AddTicks(5909),
-                            Name = "User"
+                            ConcurrencyStamp = "42fbe6ab-ad2c-4665-b771-5348207664b0",
+                            CreatedOn = new DateTime(2022, 12, 15, 20, 36, 30, 684, DateTimeKind.Local).AddTicks(1469),
+                            Name = "User",
+                            NormalizedName = "USER"
                         });
                 });
 
@@ -414,6 +452,27 @@ namespace GamerForumWeb.Db.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "25a6dc8b-a212-4cd8-9b62-efcdea0c7ab1",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "cac78b32-932a-4b68-99e7-305d9b64c0cd",
+                            CreatedDate = new DateTime(2022, 12, 15, 20, 36, 30, 678, DateTimeKind.Local).AddTicks(4474),
+                            Email = "admin@gmail.bg",
+                            EmailConfirmed = false,
+                            FirstName = "Admin",
+                            LastName = "Admin",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@GMAIL.COM",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAEAACcQAAAAEN7E4JhnXGZ0RGY4OFdb3E9eiDtcJSAysCTm9YOzWLejnfqyDWs0ehkoosPo6radzQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "812c4f32-959e-4130-a820-a679016a83bd",
+                            TwoFactorEnabled = false,
+                            UserName = "admin"
+                        });
                 });
 
             modelBuilder.Entity("GamerForumWeb.Db.Data.Entities.UserGames", b =>
@@ -433,7 +492,7 @@ namespace GamerForumWeb.Db.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "06df5d6a-ae43-4a1e-a3ad-0c9f6ddf777c",
+                            UserId = "25a6dc8b-a212-4cd8-9b62-efcdea0c7ab1",
                             GameId = 1
                         });
                 });
@@ -552,6 +611,13 @@ namespace GamerForumWeb.Db.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "25a6dc8b-a212-4cd8-9b62-efcdea0c7ab1",
+                            RoleId = "1"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
