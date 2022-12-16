@@ -24,7 +24,8 @@ namespace GamerForumWeb.Db.Data.Configuration
                 NormalizedUserName = "ADMIN",
                 Email = "admin@gmail.bg",
                 NormalizedEmail = "ADMIN@GMAIL.COM",
-                PasswordHash = hasher.HashPassword(null, "1234567890"),
+                PasswordHash = hasher.HashPassword(null, "1234567890"), 
+                EmailConfirmed = true,
                 FirstName = "Admin",
                 LastName = "Admin",                
             };
