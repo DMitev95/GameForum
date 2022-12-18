@@ -13,14 +13,14 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">GamerForumWeb</a>
+                <a class="navbar-brand" asp-area="Users" asp-controller="Home" asp-action="Index">GamerForumWeb</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarColor01">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="btn text-dark" asp-area="User" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="btn text-dark" asp-area="Users" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         @if (User?.Identity?.IsAuthenticated ?? false)
                         {

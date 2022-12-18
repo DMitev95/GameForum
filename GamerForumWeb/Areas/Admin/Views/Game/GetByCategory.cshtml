@@ -44,11 +44,11 @@
             <div class="card-body">
             </div>
             <div class="card-footer text-muted gap-2">
-                <a asp-controller="User" asp-action="AddToCollection" asp-route-gameId="@game.Id" class="btn btn-outline-success">Add as Favorite</a>
-                <a asp-controller="Post" asp-action="Add" asp-route-gameId="@game.Id" class="btn btn-outline-success">Add Post</a>
-                <a asp-controller="Post" asp-action="All" asp-route-gameId="@game.Id" class="btn btn-outline-info">All Posts</a>
-                <a asp-controller="Game" asp-action="Edit" asp-route-gameId="@game.Id" class="btn btn-outline-warning">Edit Game</a>
-                <a asp-controller="Game" asp-action="Delete" asp-route-gameId="@game.Id" class="btn btn-outline-danger">Delete</a>
+                <a asp-area="Users" asp-controller="User" asp-action="AddToCollection" asp-route-gameId="@game.Id" class="btn btn-outline-success">Add as Favorite</a>
+                <a asp-area="Users" asp-controller="Post" asp-action="Add" asp-route-gameId="@game.Id" class="btn btn-outline-success">Add Post</a>
+                <a asp-area="Users" asp-controller="Post" asp-action="All" asp-route-gameId="@game.Id" class="btn btn-outline-info">All Posts</a>
+                <a asp-area="Admin" asp-controller="Game" asp-action="Edit" asp-route-gameId="@game.Id" class="btn btn-outline-warning">Edit Game</a>
+                <a asp-area="Admin" asp-controller="Game" asp-action="Delete" asp-route-gameId="@game.Id" class="btn btn-outline-danger">Delete</a>
             </div>
         </div>
     }
