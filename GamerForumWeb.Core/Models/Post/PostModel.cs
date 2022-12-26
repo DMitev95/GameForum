@@ -15,7 +15,7 @@ namespace GamerForumWeb.Core.Models.Post
         [StringLength(MaxContentLenght, MinimumLength = MinContentLenght, ErrorMessage = "{0} lenght must be between {2} and {1} characters long!")]
         public string Content { get; set; }
 
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
+        public DateTime CreatedDate { get; set; }
 
         [Required]
         public string UserId { get; set; } = null!;

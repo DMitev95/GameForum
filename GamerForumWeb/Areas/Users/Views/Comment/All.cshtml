@@ -20,7 +20,7 @@
                                         <div>
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <p class="mb-3">
-                                                    @Model.Username <span class="small">@Model.CreatedOn</span>
+                                                    @Model.Username <span class="small">@Model.CreatedDate</span>
                                                 </p>
                                                 <a href="@Url.Action("Add", "Comment", new { PostId = Model.PostId })" class="nav-link"><i class="bi bi-reply"></i> Reply</a>
                                             </div>

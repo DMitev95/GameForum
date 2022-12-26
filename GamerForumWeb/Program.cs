@@ -26,11 +26,6 @@ builder.Services.AddAutoMapper(typeof(GamerForumWeb.Core.Services.GameService));
 builder.Services.AddRazorPages();
 builder.Services.AddApplicationServices();
 
-builder.Services.ConfigureApplicationCookie(options =>
-{
-    options.LoginPath = "/User/Login";
-});
-
 builder.Services.AddControllersWithViews(options =>
 {
     options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();

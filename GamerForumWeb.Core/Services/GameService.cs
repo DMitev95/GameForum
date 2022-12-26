@@ -36,7 +36,7 @@ namespace GamerForumWeb.Core.Services
 
         public async Task<IEnumerable<GamesQueryModel>> AllGames()
         {
-            return await repo.AllReadonly<Game>().Where(g=>g.IsDeleted == false).OrderByDescending(g => g.Rating).ThenByDescending(g => g.Title)
+            return await repo.AllReadonly<Game>().Where(g => g.IsDeleted == false).OrderByDescending(g => g.Rating).ThenByDescending(g => g.Title)
                 .ProjectTo<GamesQueryModel>(mapper.ConfigurationProvider)
                 .ToListAsync();
         }
@@ -49,25 +49,27 @@ namespace GamerForumWeb.Core.Services
             {
                 throw new ArgumentException("Invalid Game!");
             }
-            game.IsDeleted= true;
+            game.IsDeleted = true;
             game.DeletedOn = DateTime.Now;
             repo.Update(game);
             await repo.SaveChangesAsync();
         }
 
-        public async Task<GamesQueryModel> FindeGameByName(string gameName)
+        public async Task<IEnumerable<GamesQueryModel>> FindeGameByName(string gameName)
         {
-            var game = await repo.All<Game>(g => g.Title == gameName && g.IsDeleted == false).FirstOrDefaultAsync();
-            if (game == null)
+            var game = await repo.All<Game>(g => g.Title.Contains(gameName) && g.IsDeleted == false).OrderByDescending(g => g.Rating)
+                .ProjectTo<GamesQueryModel>(mapper.ConfigurationProvider)
+                .ToListAsync();
+            if (game.Count == 0)
             {
                 throw new ArgumentException("Invalid game name!");
             }
 
-            var category = await repo.GetByIdAsync<Category>(game.CategoryId);
-            var gameModel = mapper.Map<GamesQueryModel>(game);
-            gameModel.CategoryName = category.Name;
+            //var category = await repo.GetByIdAsync<Category>(game.CategoryId);
+            //var gameModel = mapper.Map<GamesQueryModel>(game);
+            //gameModel.CategoryName = category.Name;
 
-            return gameModel;  
+            return game;
         }
 
         public async Task<IEnumerable<Category>> GetCategories()
@@ -77,7 +79,7 @@ namespace GamerForumWeb.Core.Services
 
         public async Task<GameModel> GetGameModelById(int gameId)
         {
-            var game =  await repo.GetByIdAsync<Game>(gameId);
+            var game = await repo.GetByIdAsync<Game>(gameId);
 
             if (game == null || game.IsDeleted == true)
             {
@@ -104,7 +106,7 @@ namespace GamerForumWeb.Core.Services
                 .ProjectTo<GamesQueryModel>(mapper.ConfigurationProvider)
                 .Take(3)
                 .ToListAsync();
-        }      
+        }
 
         public async Task UpdateGame(int gameId, GameModel model)
         {
@@ -118,7 +120,7 @@ namespace GamerForumWeb.Core.Services
             game.Description = sanitizor.Sanitize(model.Description);
             game.Studio = sanitizor.Sanitize(model.Studio);
             game.Rating = model.Rating;
-            game.CategoryId = model.CategoryId; 
+            game.CategoryId = model.CategoryId;
             game.ImageUrl = sanitizor.Sanitize(model.ImageUrl);
             game.ModifiedOn = DateTime.Now;
 

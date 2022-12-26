@@ -10,7 +10,7 @@ namespace GamerForumWeb.Core.Models.Post
 
         public string? Content { get; set; }
 
-        public DateTime CreatedOn { get; set; }
+        public DateTime CreatedDate { get; set; }
 
         public int? GameId { get; set; }
 

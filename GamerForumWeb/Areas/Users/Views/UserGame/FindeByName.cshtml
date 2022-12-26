@@ -1,4 +1,4 @@
-﻿@model GamesQueryModel
+﻿@model IEnumerable<GamesQueryModel>
 
 @{
     ViewBag.Title = "Finde game by name";
@@ -8,37 +8,40 @@
 <hr />
 
 <div class="text-center row gap-1 justify-content-center">
-    <div class="card col-5">
-        <h3 class="card-header">@Model.Title</h3>
-        <div class="card-body">
-            <h5 class="card-title">Studio:</h5>
-            <h6 class="card-subtitle text-muted">@Model.Studio</h6>
+    @foreach (var game in Model)
+    {
+        <div class="card col-5">
+            <h3 class="card-header">@game.Title</h3>
+            <div class="card-body">
+                <h5 class="card-title">Studio:</h5>
+                <h6 class="card-subtitle text-muted">@game.Studio</h6>
+            </div>
+            <img class="center-block" style="width: 33rem; height: 20rem;"
+             src="@game.ImageUrl" alt="Game Image">
+            <div class="card-body">
+                <h4 class="card-text">Description:</h4>
+                <p class="list-group-item">@game.Description</p>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Rating:</h5>
+                <h6 class="card-subtitle text-muted">@game.Rating</h6>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Category:</h5>
+                <h6 class="card-subtitle text-muted">@game.CategoryName</h6>
+            </div>
+            <div class="card-body">
+            </div>
+            <div class="card-footer text-muted gap-2">
+                <a asp-controller="User" asp-action="AddToCollection" asp-route-gameId="@game.Id" class="btn btn-outline-success">Add as Favorite</a>
+                <a asp-controller="Post" asp-action="Add" asp-route-gameId="@game.Id" class="btn btn-outline-success">Add Post</a>
+                <a asp-controller="Post" asp-action="All" asp-route-gameId="@game.Id" class="btn btn-outline-info">All Posts</a>
+                @if (User.IsAdmin())
+                {
+                    <a asp-area="Admin" asp-controller="Game" asp-action="Edit" asp-route-gameId="@game.Id" class="btn btn-outline-warning">Edit Game</a>
+                    <a asp-area="Admin" asp-controller="Game" asp-action="Delete" asp-route-gameId="@game.Id" class="btn btn-outline-danger">Delete</a>
+                }
+            </div>
         </div>
-        <img class="center-block" style="width: 33rem; height: 20rem;"
-             src="@Model.ImageUrl" alt="Game Image">
-        <div class="card-body">
-            <h4 class="card-text">Description:</h4>
-            <p class="list-group-item">@Model.Description</p>
-        </div>
-        <div class="card-body">
-            <h5 class="card-title">Rating:</h5>
-            <h6 class="card-subtitle text-muted">@Model.Rating</h6>
-        </div>
-        <div class="card-body">
-            <h5 class="card-title">Rating:</h5>
-            <h6 class="card-subtitle text-muted">@Model.CategoryName</h6>
-        </div>
-        <div class="card-body">
-        </div>
-        <div class="card-footer text-muted gap-2">
-            <a asp-controller="User" asp-action="AddToCollection" asp-route-gameId="@Model.Id" class="btn btn-outline-success">Add as Favorite</a>
-            <a asp-controller="Post" asp-action="Add" asp-route-gameId="@Model.Id" class="btn btn-outline-success">Add Post</a>
-            <a asp-controller="Post" asp-action="All" asp-route-gameId="@Model.Id" class="btn btn-outline-info">All Posts</a>
-            @if (User.IsAdmin())
-            {
-                <a asp-area="Admin" asp-controller="Game" asp-action="Edit" asp-route-gameId="@Model.Id" class="btn btn-outline-warning">Edit Game</a>
-                <a asp-area="Admin" asp-controller="Game" asp-action="Delete" asp-route-gameId="@Model.Id" class="btn btn-outline-danger">Delete</a>
-            }
-        </div>
-    </div>
+    }
 </div>
