@@ -26,10 +26,16 @@ builder.Services.AddAutoMapper(typeof(GamerForumWeb.Core.Services.GameService));
 builder.Services.AddRazorPages();
 builder.Services.AddApplicationServices();
 
-builder.Services.AddControllersWithViews(options =>
-{
-    options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
-})
+//builder.Services.AddControllersWithViews(options =>
+//{
+//    options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+//})
+//    .AddMvcOptions(options =>
+//    {
+//        options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+//    });
+
+builder.Services.AddControllersWithViews()
     .AddMvcOptions(options =>
 {
     options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());

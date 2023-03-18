@@ -13,6 +13,13 @@ namespace GamerForumWeb.Core.Services
             repo = _repo;
         }
 
+        public int GetVotes(int commentId)
+        {
+            var votes = this.repo.All<Vote>()
+                .Where(x => x.CommentId == commentId).Sum(x => (int)x.Type);
+            return votes;
+        }
+
         public async Task<int> VoteAsync(int commentId, string userId, bool isUpVote)
         {
             var vote = repo.All<Vote>().FirstOrDefault(v => v.Comment.Id == commentId && v.UserId == userId);

@@ -23,6 +23,7 @@ namespace GamerForumWeb.Core.MapperConfig
             //Comment Mapping
             this.CreateMap<CommentModel, PostComment>();
             this.CreateMap<PostComment, CommentModel>();
+            this.CreateMap<PostComment, CommentQueryModel>();
 
             //Post Mapping
             this.CreateMap<Post, PostQueryModel>().ForMember(p => p.PostId, opt => opt.MapFrom(src => src.Id));

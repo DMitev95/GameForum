@@ -1,4 +1,5 @@
-﻿using GamerForumWeb.Db.Data.Entities;
+﻿using GamerForumWeb.Core.Models.Comment;
+using GamerForumWeb.Db.Data.Entities;
 
 namespace GamerForumWeb.Core.Models.Post
 {
@@ -16,7 +17,9 @@ namespace GamerForumWeb.Core.Models.Post
 
         public string? Username { get; set; }
 
-        public List<PostComment> Comments { get; set; } = new List<PostComment>();
+        //public int VotesCount { get; set; }
+
+        public List<CommentQueryModel> Comments { get; set; } = new List<CommentQueryModel>();
 
         public string? UserId { get; set; }
     }
