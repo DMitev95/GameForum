@@ -1,7 +1,7 @@
 # :computer: GameForum :computer:
 
 # :notebook_with_decorative_cover: Description: :notebook_with_decorative_cover:
-This is a city search current weather app. For UI I use React.JS and for backend I use ASP.NET Core API which makes API calls to OpenWeatherAPI.
+This is simple web forum for games and everything about them. Users can post posts and coments. Also they can like and dislike the coments.
 
 # :hammer: Project was build with: :wrench:
 <p> :wrench: ASP.NET Core MVC </p>
